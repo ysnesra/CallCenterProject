@@ -7,8 +7,6 @@ using System.Reflection;
 using System.Text;
 
 
-
-
 namespace DataAccess.Concrete.Entityframework
 {
     public class CallCenterDbContext : DbContext

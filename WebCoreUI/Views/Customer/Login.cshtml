@@ -1,32 +1,65 @@
 ﻿@model Entities.DTOs.CustomerLoginDto
 
 @{
-    ViewData["Title"] = "Giriş Ekranı";   //Layout sayfasındaki ViewData kısmını bu değerle doldurur
+    ViewData["Title"] = "Giriş Ekranı";   
 }
 
-<div class="row">
-    <div class="col-4 offset-4">
-        @*soldan 4 birim ötele, 4 birimlik kolon yap.Soldan da 4birim kaldı Toplam 12birim tamamlanmış oldu*@
-        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="card-title text-center">@ViewData["Title"]</h3>
+                    <hr />
+                    <form asp-action="Login" method="post">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>     
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Mail..." />  
+                            <span asp-validation-for="Email" class="text-danger small"></span>    
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" class="form-control" type="password" placeholder="P@ssW0rd!" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group d-grid mb-3">
+                            @* d-grid butonun bulunduğu dive yayılmasını sağlar*@
+                            <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-@*Kullanıcı adı ve Şifre için inputlarımızı oluşturalım.Form olarak*@
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }
+
+
+
+@*
 <div class="row">
     <div class="col-4 offset-4">
-        <form method="post">
-            @*formu post ediyorum*@
+        <form asp-action="Login" method="post">
 
-            @*Genel hataları göstermek için div koyalım*@
-            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>      @*'ModelOnly' aşağıdaki propertlerin dışındaki hataları göster deriz*@
-
-            @*<input type="hidden" value="Role" value="@User.FindFirst(Model.Role) />*@
-
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>     
 
             <div class="form-group mb-3">
                 <label asp-for="Email" class="form-label">Email</label>
-                <input asp-for="Email" class="form-control" placeholder="Mail..." />   @*placeholder ipucu metni*@
-                <span asp-validation-for="Email" class="text-danger small"></span>     @*Email ile ilgili hataları bu span içinde göster.Sayfada input un altına kırmızı renkte "Email is requried" yazar*@
+                <input asp-for="Email" class="form-control" placeholder="Mail..." />  
+                <span asp-validation-for="Email" class="text-danger small"></span>    
             </div>
 
             <div class="form-group mb-3">
@@ -36,7 +69,7 @@
             </div>
 
             <div class="form-group d-grid mb-3">
-                @* d-grid butonun bulunduğu dive yayılmasını sağlar*@
+                @* d-grid butonun bulunduğu dive yayılmasını sağlar
                 <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</button>
             </div>
 
@@ -44,8 +77,5 @@
     </div>
 </div>
 
-@section Scripts{
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
- }
+*@
+

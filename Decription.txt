@@ -4,3 +4,27 @@ Call center uygulamasý .NET Core 6'da, ORM Toollarýndan EntityFramework ile Code
 Bu uygulama, müþteri hizmetleri temsilcilerinin müþterilerle görüþmelerini yönetmelerine olanak tanýyan bir arayüz saðlar. 
 Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
 
+1.CodeFirst ORM tekniðiyle MsSQL'de database oluþturuldu -> CallCenterDb isminde 
+2.EntityFramework kütüphaneleri DataAccess ve Core katmanlarýna yüklendi.
+3.Core Katmanýna --> IEntity,IDto,
+	                 IEntityRepository (CRUD iþlemelerinin generic olrak oluþturuldu)
+					 EfEntityRepositoryBase ((TEntity,TContext) hangi tablo, hangi veritabaný verillirse ona göre CRUD iþlemlerini yapacak base sýnýfý oluþturuldu.
+
+4. 
+*.FluentValidation desteði eklendi.
+	Kullanýcý adý boþ geçilemez,Password alaný en az sekiz karakter, en az bir harf ve bir sayý içermelidir... gibi kurallar verildi.
+*.ActionFilter(.Net'in kendi DependencyEnjection özellliði)
+*.Business-> DependencyResolvers ->DependecyEnjection.cs clasýnda "AddBusinessService" isminde extention methot oluþturuldu.Ve program.cs ye kullanaðý service "builder.Services.AddBusinessService()" eklendi.
+
+5.Arayüzde iconlar kullanmak için -> Fontawesome kütüphanesini eklendi. 
+
+6.Müþteri Login,Register sayfalarý yapýldý.
+
+7.Password þifreleme iþlemi yapýldý.
+  *Hashing yöntemini kullanýldý.MD5 þifreleme Algoritmasý ile geri dönüþü olamayacak þekilde þifrelendi
+  *Kullanýcý her login olduðunda þifrelenmiþle þifrelenmiþ veriyi karþýlaþtýrýr.
+  *NetCore.Encrypt paketi kullanýldý.DataAccess katmanýna indirildi.
+  *appsettings.json'e MD5Salt isminde tuz tanýmlandý.Geri çözülmesin diye MD5 ile beraber þifrelenir
+
+7.MüþteriTemsilcisi Profile sayfasý yapýldý
+
