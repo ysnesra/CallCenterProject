@@ -1,0 +1,6 @@
+
+Call center uygulamasý .NET Core 6'da, ORM Toollarýndan EntityFramework ile Codefirst tekniði kullanýlarak geliþtirildi. 
+
+Bu uygulama, müþteri hizmetleri temsilcilerinin müþterilerle görüþmelerini yönetmelerine olanak tanýyan bir arayüz saðlar. 
+Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
+
