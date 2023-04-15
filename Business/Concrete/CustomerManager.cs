@@ -1,11 +1,14 @@
 ﻿using Business.Abstract;
+using Business.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,11 +16,14 @@ namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
-        ICustomerDal _customerDal;
-
-        public CustomerManager(ICustomerDal customerDal)
+        private ICustomerDal _customerDal;
+        private ITokenHelper _tokenHelper;
+       
+        public CustomerManager(ICustomerDal customerDal, ITokenHelper tokenHelper)
         {
             _customerDal = customerDal;
+            _tokenHelper = tokenHelper;
+
         }
 
         public void AddCustomerDto(CustomerRegisterDto model)
@@ -40,6 +46,43 @@ namespace Business.Concrete
             {
                 throw new Exception("Aynı mail adresinde kullanıcı bulunmaktadır");
             }
+        }
+
+        public CustomerLoginDto GetByLoginFilter(CustomerLoginDto model)
+        {
+            var customerDb = _customerDal.Get(x => x.Email == model.Email && x.Password == model.Password);
+
+            if (customerDb is null)
+            {
+                throw new Exception("Bu Mail ve Parola ya ait kullanıcı bulunamadı");
+                return null;
+            }
+            Customer dbCustomer = new Customer()
+            {
+                CustomerId = model.CustomerId,
+                Email = model.Email,
+                Password = model.Password
+            };
+
+            var result = CreateAccessToken(dbCustomer);
+           
+            CustomerLoginDto response = new()
+            {
+                CustomerId = customerDb.CustomerId,
+                Email = customerDb.Email,
+                Password = customerDb.Password,
+                Token=result
+     
+            };
+
+            return (response);
+        }
+
+        public string CreateAccessToken(Customer customer)
+        {
+            var accessToken = _tokenHelper.CreateToken(customer);
+            Console.WriteLine(accessToken);
+            return accessToken.Token;
         }
     }
 }

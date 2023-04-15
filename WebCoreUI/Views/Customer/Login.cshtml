@@ -1,7 +1,7 @@
 ﻿@model Entities.DTOs.CustomerLoginDto
 
 @{
-    ViewData["Title"] = "Giriş Ekranı";   
+    ViewData["Title"] = "Giriş Ekranı";
 }
 
 
@@ -12,14 +12,14 @@
                 <div class="card-body">
                     <h3 class="card-title text-center">@ViewData["Title"]</h3>
                     <hr />
-                    <form asp-action="Login" method="post">
+                    <form asp-action="Login" id="login-form" method="post">
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>     
+                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
                         <div class="form-group mb-3">
                             <label asp-for="Email" class="form-label">Email</label>
-                            <input asp-for="Email" class="form-control" placeholder="Mail..." />  
-                            <span asp-validation-for="Email" class="text-danger small"></span>    
+                            <input asp-for="Email" class="form-control" placeholder="Mail..." />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
 
                         <div class="form-group mb-3">
@@ -40,42 +40,46 @@
     </div>
 </div>
 
-
 @section Scripts{
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
- }
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+
+    $(document).ready(function () {
+        $('#login-form').submit(function (event) {
+            event.preventDefault(); // sayfa yenilenmesini önlemek için formun varsayılan davranışını iptal eder
+
+            var formData = {
+                'Email': $('input[name=Email]').val(),
+                'Password': $('input[name=Password]').val()
+            };
+            console.log(formData);
+
+            $.ajax({
+                type: 'POST',
+                url: '/Customer/Login',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                dataType: 'json',
+                encode: true
+            })
+            .done(function (data) {
+                console.log(data);
+                if (data!=null) {
+                var cookieString = "token="+data.customerdb.token;
+                document.cookie = cookieString
+                    //alert('Giriş başarılı!' + JSON.stringify(data));
+                } else {
+                    alert('Giriş başarısız. Lütfen tekrar deneyin.');
+                }
+            })
+            .fail(function (data) {
+                alert('Sunucu hatası. Lütfen daha sonra tekrar deneyin.');
+            });
+        });
+    });
+    </script>
+}
 
 
-
-@*
-<div class="row">
-    <div class="col-4 offset-4">
-        <form asp-action="Login" method="post">
-
-            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>     
-
-            <div class="form-group mb-3">
-                <label asp-for="Email" class="form-label">Email</label>
-                <input asp-for="Email" class="form-control" placeholder="Mail..." />  
-                <span asp-validation-for="Email" class="text-danger small"></span>    
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="Password" class="form-label">Password</label>
-                <input asp-for="Password" class="form-control" type="password" placeholder="P@ssW0rd!" />
-                <span asp-validation-for="Password" class="text-danger small"></span>
-            </div>
-
-            <div class="form-group d-grid mb-3">
-                @* d-grid butonun bulunduğu dive yayılmasını sağlar
-                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</button>
-            </div>
-
-        </form>
-    </div>
-</div>
-
-*@
 

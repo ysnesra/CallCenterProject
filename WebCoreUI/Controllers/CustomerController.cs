@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Abstract;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,13 +44,25 @@ namespace WebCoreUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(CustomerLoginDto model)
+        public IActionResult Login([FromBody] CustomerLoginDto model)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
+                //Mail ve şifre databasede var mı
+                var customerdb = _customerService.GetByLoginFilter(model);
+               Console.WriteLine(customerdb);
+                if (customerdb == null)
+                {
+                    return RedirectToAction(nameof(Login));
+                }
 
-            }
-            return View(model);
+                //return View (customerdb);
+               // Eğer giriş başarılıysa, veriyi JSON olarak döndürüyoruz
+                return Json(new { success = true, customerdb = customerdb });
+            //}
+            //// eğer giriş başarısız olursa, hata mesajlarını JSON verisi olarak gönderiyoruz
+            //var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            //return Json(new { success = false, errors = errors });
         }
     }
 }

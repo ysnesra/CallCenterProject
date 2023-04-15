@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
+using Business.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.Entityframework;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,9 @@ namespace Business.DependencyResolvers
             services.AddSingleton<IRequestService, RequestManager>();
             services.AddSingleton<IRequestDal, EfRequestDal>();
 
+            services.AddSingleton<ITokenHelper, JwtHelper>();
+
+ 
             return services;
         }
     }
