@@ -20,6 +20,7 @@ builder.Services.ServisRelationShip();  //.net in kendi IoC Containerýnda katman
 // Add configuration
 builder.Configuration.AddJsonFile("appsettings.json");
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

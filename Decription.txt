@@ -29,6 +29,11 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
 	 Böylece; Cookie Çerezdeki token sayesinde kullanýcý sonraki isteklerinde sunucu tarafýndan tanýnýr.
   *Bu token ile Authenticate ve Authorize iþlemleri yapýldý.
 
+  !!!!
+  Burda Authorize iþlemini Layout tarafýnda " @if (User.Identity.IsAuthenticated)" kodu sürekli false geldiði çalýþmadýðý için yöntem deðiþikliðine gidildi:
+  JWT Tokený -> Cookieye Ajax ile yüklemek yerine Controllerda CookiesAppend() metotuyla yüklendi. 
+
+
 	 ***************jwt ekran fotosu************************
 
 8.Müþteri login olduktan sonra Anasayfada neleri görecek belirlemek için;

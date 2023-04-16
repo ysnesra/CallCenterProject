@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.IdentityModel.Tokens.Jwt
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,34 +27,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-
-                        @if (User.Identity.IsAuthenticated) //loginse
-                        {
-
-                            if (User.IsInRole("customerRep"))     //Kullanıcının rolü müşteri temsilcisi ise
-                            {
-                                <li class="nav-item ">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="CustomerRep" asp-action="Index"><i class="fa-solid fa-user me-2"></i>Müşteri Temsilcisi</a>
-                                </li>
-                            }
-
-                            <li class="nav-item ms-auto">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Profile"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
-                            </li>
-                        }
-                        else
-                        {
+                       
                             <li class="nav-item ms-auto">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Register"><i class="fa-solid fa-user me-2"></i>Üye Ol</a>
                             </li>
-                        }
-
+                       
+                            @if (User.IsInRole("customerRep"))
+                            {
+                                <li class="nav-item ms-auto">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Profile"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+                                </li>
+                            }
+                        
                         
                     </ul>
                 </div>

@@ -1,31 +1,42 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.DTOs;
+using System.Web;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace WebCoreUI.Controllers
 {
-    [Authorize]
+   // [Authorize(Roles ="customer")]
     public class CustomerController : Controller
     {
         ICustomerService _customerService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerController(ICustomerService customerService)
+
+        public CustomerController(ICustomerService customerService, IHttpContextAccessor httpContextAccessor)
         {
             _customerService = customerService;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
+        //Müşteri Ekranı 
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         //ÜyeOl Ekranı formu
-        [AllowAnonymous] 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Register(CustomerRegisterDto model)
@@ -43,26 +54,39 @@ namespace WebCoreUI.Controllers
         //Giriş Ekranı formu
         [AllowAnonymous]
         public IActionResult Login()
-        {            
+        {
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] CustomerLoginDto model)
-        {  
+        public IActionResult Login(CustomerLoginDto model)
+        {
             //Mail ve şifre databasede var mı
             var customerdb = _customerService.GetByLoginFilter(model);
-              
+
             if (customerdb == null)
             {
                 return RedirectToAction(nameof(Login));
             }
 
-            //return View (customerdb);
-            // Eğer giriş başarılıysa, veriyi JSON olarak döndürüyoruz
-            return Json(new { success = true, customerdb = customerdb });           
+            _httpContextAccessor.HttpContext.Response.Cookies.Append("token", customerdb.Token); // Oluştuyrulan tokeni cookie ye basmak için kullanılır 
+
+
+            //eğer çağrı merkezi personeli ise // x viewine eğer müşteri ise y viewine redirect ediceksin 
+            if (customerdb.Role == "customerRep")
+            {
+                return RedirectToAction("Index", "CustomerRep");
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Customer");
+            }
+
+
         }
+
 
         public IActionResult Logout()
         {

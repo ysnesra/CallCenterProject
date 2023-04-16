@@ -76,14 +76,6 @@ namespace Business.Utilities.Security.JWT
             claims.Add(new Claim("Email", customer.Email));
             claims.Add(new Claim(ClaimTypes.Role, customer.Role));
 
-            //ClaimsIdentity nesnesi içerisine claimleri ekliyor.Hangi Authentication ı kullanılıyorsa onu da parametre olarak verilir//CookieAuthentication
-            ClaimsIdentity identity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme
-                );
-            //ClaimsPrincipal bizden ClaimsIdentity nesnemizi ister
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-            //HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, principal);
-
             return claims;
         }
     }

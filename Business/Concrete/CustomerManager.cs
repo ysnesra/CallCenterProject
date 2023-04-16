@@ -60,10 +60,10 @@ namespace Business.Concrete
             }
             Customer dbCustomer = new Customer()
             {
-                CustomerId = model.CustomerId,
-                Email = model.Email,
-                Password = model.Password,
-                Role=model.Role,
+                CustomerId = customerDb.CustomerId,
+                Email = customerDb.Email,
+                Password = customerDb.Password,
+                Role= customerDb.Role,
             };
 
             var result = CreateAccessToken(dbCustomer);
@@ -84,7 +84,6 @@ namespace Business.Concrete
         public string CreateAccessToken(Customer customer)
         {
             var accessToken = _tokenHelper.CreateToken(customer);
-            Console.WriteLine(accessToken);
             return accessToken.Token;
         }
     }

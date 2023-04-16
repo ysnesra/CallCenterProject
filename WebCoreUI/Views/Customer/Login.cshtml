@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-center">@ViewData["Title"]</h3>
                     <hr />
-                    <form asp-action="Login" id="login-form" method="post">
+                    <form asp-action="Login" method="post">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
@@ -28,7 +28,7 @@
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
-                        <input type="hidden" name="Role" />
+                        <input type="hidden" name="CustomerId" />
 
                         <div class="form-group d-grid mb-3">
                             @* d-grid butonun bulunduğu dive yayılmasını sağlar*@
@@ -42,46 +42,6 @@
     </div>
 </div>
 
-@section Scripts{
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
-
-    <script>
-
-    $(document).ready(function () {
-        $('#login-form').submit(function (event) {
-            event.preventDefault(); // sayfa yenilenmesini önlemek için formun varsayılan davranışını iptal eder
-
-            var formData = {
-                'Email': $('input[name=Email]').val(),
-                'Password': $('input[name=Password]').val(),
-                    'Role': $('input[name=Role]').val(),
-            };
-           // console.log(formData);
-
-            $.ajax({
-                type: 'POST',
-                url: '/Customer/Login',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',  //Gönderilen verinin türünü actiona belirtir
-                dataType: 'json',     //Json tipinde sonuç döner
-            })
-            .done(function (data) {
-                if (data!=null) {
-                    var cookieString = "token=" + data.customerdb.token; //token; çerez olarak kaydedilir // çerezin temel formatı bu şekilde yazılır.
-                    document.cookie = cookieString
-                    alert('Giriş başarılı!');
-                } else {
-                    alert('Giriş başarısız. Lütfen tekrar deneyin.');
-                }
-            })
-            .fail(function (data) {
-                alert('Sunucu hatası. Lütfen daha sonra tekrar deneyin.');
-            });
-                //.fail() yöntemi, AJAX isteği başarısız olduğunda çalışan bir jQuery yöntemidir.
-        });
-    });
-    </script>
-}
 
 
 
