@@ -33,8 +33,10 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
   Burda Authorize iþlemini Layout tarafýnda " @if (User.Identity.IsAuthenticated)" kodu sürekli false geldiði çalýþmadýðý için yöntem deðiþikliðine gidildi:
   JWT Tokený -> Cookieye Ajax ile yüklemek yerine Controllerda CookiesAppend() metotuyla yüklendi. 
 
-
 	 ***************jwt ekran fotosu************************
+
+  !!!!
+  Authorize iþlemi yapamadýðým için; Cookie Authentication yönt kullanýldý.
 
 8.Müþteri login olduktan sonra Anasayfada neleri görecek belirlemek için;
   Layout.cshtml sayfasýna if bloðu ile kontrol edilir.

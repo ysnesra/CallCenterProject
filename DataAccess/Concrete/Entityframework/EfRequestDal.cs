@@ -11,5 +11,6 @@ namespace DataAccess.Concrete.Entityframework
 {
     public class EfRequestDal : EfEntityRepositoryBase<Request, CallCenterDbContext>, IRequestDal
     {
+        //GetRequestByEmail
     }
 }

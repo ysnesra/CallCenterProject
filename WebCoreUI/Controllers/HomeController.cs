@@ -8,7 +8,7 @@ namespace WebCoreUI.Controllers
     public class HomeController : Controller
     {
         
-        //[Authorize]  //login olmuşsa girebilir
+       [Authorize]  //login olmuşsa girebilir
         public IActionResult Index()
         {
             return View();

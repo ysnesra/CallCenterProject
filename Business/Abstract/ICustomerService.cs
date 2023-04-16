@@ -14,6 +14,6 @@ namespace Business.Abstract
         void AddCustomerDto(CustomerRegisterDto model);
         CustomerLoginDto GetByLoginFilter(CustomerLoginDto model);
 
-        string CreateAccessToken(Customer customer);
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿@using System.IdentityModel.Tokens.Jwt
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,44 +27,60 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
                        
+
+                        @if (User.Identity.IsAuthenticated) //User propertsindeki ıdentitye ulaşıp IsAuthenticated mi diye bakarız
+                        {
+                            @if (User.IsInRole("customerRep"))
+                            {
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="CustomerRep" asp-action="ProfileCustRep"><i class="fa-solid fa-user me-2"></i>Müşteri Temsilcisi</a>
+                                </li>
+                            }
+                            @if 
+                            (User.IsInRole("customer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Profile"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
+                                </li>
+                            }
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Çıkış Yap</a>
+                            </li>
+
+                        }
+                        else
+                        {
+
                             <li class="nav-item ms-auto">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Register"><i class="fa-solid fa-user me-2"></i>Üye Ol</a>
                             </li>
-                       
-                            @if (User.IsInRole("customerRep"))
-                            {
-                                <li class="nav-item ms-auto">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Profile"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
-                                </li>
-                            }
-                        
-                        
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+                        }
 
-    <footer class="border-top footer text-muted">
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
         <div class="container">
-            &copy; 2023 - WebCoreUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main" class="pb-3">
+                 @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2023 - WebCoreUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+                            @await RenderSectionAsync("Scripts", required: false)
+    </body>
+    </html>

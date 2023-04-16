@@ -1,0 +1,23 @@
+﻿@model List<Entities.DTOs.RequestListByCustomerDto>
+
+@{
+    ViewData["Title"] = "Müşteri Sayfası";   //Layout sayfaındaki ViewData kısmını bu değerle doldurur
+}
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link text-dark" asp-controller="Request" asp-action="RequestListByCustomerId"><i class="fa-regular fa-notebook"></i> Taleplerim</a>
+            </li>
+        </ul>
+    </div>
+</nav>

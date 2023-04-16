@@ -58,33 +58,36 @@ namespace Business.Concrete
                 throw new Exception("Bu Mail ve Parola ya ait kullanıcı bulunamadı");
                 return null;
             }
-            Customer dbCustomer = new Customer()
-            {
-                CustomerId = customerDb.CustomerId,
-                Email = customerDb.Email,
-                Password = customerDb.Password,
-                Role= customerDb.Role,
-            };
+            #region JwtToken
+            //Customer dbCustomer = new Customer()
+            //{
+            //    CustomerId = customerDb.CustomerId,
+            //    Email = customerDb.Email,
+            //    Password = customerDb.Password,
+            //    Role= customerDb.Role,
+            //};
 
-            var result = CreateAccessToken(dbCustomer);
-           
+            //var result = CreateAccessToken(dbCustomer); 
+            #endregion
+
             CustomerLoginDto response = new()
             {
                 CustomerId = customerDb.CustomerId,
                 Email = customerDb.Email,
                 Password = customerDb.Password,
-                Role = customerDb.Role,
-                Token=result
+                Role = customerDb.Role,              
      
             };
 
             return (response);
         }
 
-        public string CreateAccessToken(Customer customer)
-        {
-            var accessToken = _tokenHelper.CreateToken(customer);
-            return accessToken.Token;
-        }
+        #region JwtToken
+        //public string CreateAccessToken(Customer customer)
+        //{
+        //    var accessToken = _tokenHelper.CreateToken(customer);
+        //    return accessToken.Token;
+        //} 
+        #endregion
     }
 }
