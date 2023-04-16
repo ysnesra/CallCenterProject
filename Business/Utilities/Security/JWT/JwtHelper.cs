@@ -1,5 +1,8 @@
 ﻿using Business.Utilities.Security.Encryption;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -8,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
 
 
 namespace Business.Utilities.Security.JWT
@@ -36,16 +40,13 @@ namespace Business.Utilities.Security.JWT
             var jwt = CreateJwtSecurityToken(_tokenOptions, customer, signingCredentials);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();//Elimizdeki token bilgisini yazdırmak.
             var token = jwtSecurityTokenHandler.WriteToken(jwt);//Elimizdeki tokeni stringe çevirdik.
-            
-            Console.WriteLine(token);
+          
 
             return new AccessToken
             {
                 Token = token,
                 Expiration = _accessTokenExpiration
             };
-           
-
         }
 
         //JWT oluşturan metot
@@ -73,9 +74,16 @@ namespace Business.Utilities.Security.JWT
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.NameIdentifier, customer.CustomerId.ToString()));
             claims.Add(new Claim("Email", customer.Email));
-            //claims.Add(new Claim(ClaimTypes.Role, existUser.Role));
+            claims.Add(new Claim(ClaimTypes.Role, customer.Role));
 
-          
+            //ClaimsIdentity nesnesi içerisine claimleri ekliyor.Hangi Authentication ı kullanılıyorsa onu da parametre olarak verilir//CookieAuthentication
+            ClaimsIdentity identity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme
+                );
+            //ClaimsPrincipal bizden ClaimsIdentity nesnemizi ister
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+            //HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, principal);
+
             return claims;
         }
     }

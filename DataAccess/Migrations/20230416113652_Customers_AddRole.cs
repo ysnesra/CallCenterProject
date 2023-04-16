@@ -4,7 +4,7 @@
 
 namespace DataAccess.Migrations
 {
-    public partial class Customer_addRole : Migration
+    public partial class Customers_AddRole : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace DataAccess.Migrations
                 name: "Role",
                 table: "Customers",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false,
+                defaultValue:"customer");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

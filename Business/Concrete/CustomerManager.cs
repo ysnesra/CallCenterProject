@@ -37,6 +37,7 @@ namespace Business.Concrete
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
+                    Phone=model.Phone,
                     Password = model.Password
                 };
 
@@ -61,7 +62,8 @@ namespace Business.Concrete
             {
                 CustomerId = model.CustomerId,
                 Email = model.Email,
-                Password = model.Password
+                Password = model.Password,
+                Role=model.Role,
             };
 
             var result = CreateAccessToken(dbCustomer);
@@ -71,6 +73,7 @@ namespace Business.Concrete
                 CustomerId = customerDb.CustomerId,
                 Email = customerDb.Email,
                 Password = customerDb.Password,
+                Role = customerDb.Role,
                 Token=result
      
             };

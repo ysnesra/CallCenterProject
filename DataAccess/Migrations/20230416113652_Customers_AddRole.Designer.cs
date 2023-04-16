@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CallCenterDbContext))]
-    [Migration("20230415083010_Customer_addRole")]
-    partial class Customer_addRole
+    [Migration("20230416113652_Customers_AddRole")]
+    partial class Customers_AddRole
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

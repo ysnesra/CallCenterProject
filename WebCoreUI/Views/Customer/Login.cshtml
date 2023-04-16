@@ -28,6 +28,8 @@
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
+                        <input type="hidden" name="Role" />
+
                         <div class="form-group d-grid mb-3">
                             @* d-grid butonun bulunduğu dive yayılmasını sağlar*@
                             <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</button>
@@ -51,24 +53,23 @@
 
             var formData = {
                 'Email': $('input[name=Email]').val(),
-                'Password': $('input[name=Password]').val()
+                'Password': $('input[name=Password]').val(),
+                    'Role': $('input[name=Role]').val(),
             };
-            console.log(formData);
+           // console.log(formData);
 
             $.ajax({
                 type: 'POST',
                 url: '/Customer/Login',
                 data: JSON.stringify(formData),
-                contentType: 'application/json',
-                dataType: 'json',
-                encode: true
+                contentType: 'application/json',  //Gönderilen verinin türünü actiona belirtir
+                dataType: 'json',     //Json tipinde sonuç döner
             })
             .done(function (data) {
-                console.log(data);
                 if (data!=null) {
-                var cookieString = "token="+data.customerdb.token;
-                document.cookie = cookieString
-                    //alert('Giriş başarılı!' + JSON.stringify(data));
+                    var cookieString = "token=" + data.customerdb.token; //token; çerez olarak kaydedilir // çerezin temel formatı bu şekilde yazılır.
+                    document.cookie = cookieString
+                    alert('Giriş başarılı!');
                 } else {
                     alert('Giriş başarısız. Lütfen tekrar deneyin.');
                 }
@@ -76,6 +77,7 @@
             .fail(function (data) {
                 alert('Sunucu hatası. Lütfen daha sonra tekrar deneyin.');
             });
+                //.fail() yöntemi, AJAX isteği başarısız olduğunda çalışan bir jQuery yöntemidir.
         });
     });
     </script>

@@ -20,11 +20,24 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
 
 6.Müþteri Login,Register sayfalarý yapýldý.
 
-7.Password þifreleme iþlemi yapýldý.
-  *Hashing yöntemini kullanýldý.MD5 þifreleme Algoritmasý ile geri dönüþü olamayacak þekilde þifrelendi
-  *Kullanýcý her login olduðunda þifrelenmiþle þifrelenmiþ veriyi karþýlaþtýrýr.
-  *NetCore.Encrypt paketi kullanýldý.DataAccess katmanýna indirildi.
-  *appsettings.json'e MD5Salt isminde tuz tanýmlandý.Geri çözülmesin diye MD5 ile beraber þifrelenir
+7.Login Ýþlemi
+  *Login.chtml sayafasýndan verileri modeli doldurarak deðilde Ajax ile Json data olarak Login actionýna gönderildi.
+  *Login olan kiþi database de varsa CreteToken metotuyla Jwt Token üretildi.
+  *program.cs ye JwtBearer service'i eklenerek JWT authentication yapýlandýrýlmasý yapýldý.
+  *Oluþan Token, Jquery Ajax kýsmýnda-> 
+    "token" adlý çerez oluþturulur ve kullanýcýnýn tarayýcýsýnda cookie çerezlerine kaydedilir.
+	 Böylece; Cookie Çerezdeki token sayesinde kullanýcý sonraki isteklerinde sunucu tarafýndan tanýnýr.
+  *Bu token ile Authenticate ve Authorize iþlemleri yapýldý.
 
-7.MüþteriTemsilcisi Profile sayfasý yapýldý
+	 ***************jwt ekran fotosu************************
+
+8.Müþteri login olduktan sonra Anasayfada neleri görecek belirlemek için;
+  Layout.cshtml sayfasýna if bloðu ile kontrol edilir.
+
+9.Customer tablosuna "Role" kolonu eklendi. Defaultu customer belirlendi.
+  Layot sayfasýnda Authenticate mi eðer Authenticate olduysa Rolüne göre Anasayfada göreceði butonlar ayarlandý
+  Eðer rolü customerRep ise "Müþteri Temsilcisi" butonunu görebilecek.
+
+
+
 

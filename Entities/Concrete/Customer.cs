@@ -15,8 +15,7 @@ namespace Entities.Concrete
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-
-        //public string? Role { get; set; } = "customer";
+        public string Role { get; set; } = "customer";
 
         public ICollection<Call> Calls { get; set; } 
         public ICollection<Request> Requests { get; set; }

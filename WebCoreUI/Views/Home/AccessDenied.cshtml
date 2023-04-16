@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Erişim Engellendi";   //Layout syafaındaki ViewData kısmını bu değerle doldurur
+}
+
+
+<div class="row">
+    <div class="col-4 offset-4">
+        @*soldan 4 birim ötele 4 birimlik kolon yap.Soldan da 4birim kaldı Toplam 12birim tamamlanmış oldu*@
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-center">
+        <h1 class="text-danger text-center"><i class="fa-solid fa-ban fa-3x"></i></h1>
+        <p>İlgili sayfaya erişiminiz yoktur</p>
+        <div class="text-center">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Anasayfaya Dön!</a>
+        </div>
+    </div>
+</div>

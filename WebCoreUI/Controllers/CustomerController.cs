@@ -1,10 +1,15 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.DTOs;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebCoreUI.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         ICustomerService _customerService;
@@ -14,17 +19,15 @@ namespace WebCoreUI.Controllers
             _customerService = customerService;
         }
 
-        public IActionResult List()
-        {
-            return View();
-        }
 
         //ÜyeOl Ekranı formu
+        [AllowAnonymous] 
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Register(CustomerRegisterDto model)
         {
             if (ModelState.IsValid)
@@ -38,31 +41,33 @@ namespace WebCoreUI.Controllers
         }
 
         //Giriş Ekranı formu
+        [AllowAnonymous]
         public IActionResult Login()
         {            
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Login([FromBody] CustomerLoginDto model)
-        {
-            //if (ModelState.IsValid)
-            //{
-                //Mail ve şifre databasede var mı
-                var customerdb = _customerService.GetByLoginFilter(model);
-               Console.WriteLine(customerdb);
-                if (customerdb == null)
-                {
-                    return RedirectToAction(nameof(Login));
-                }
+        {  
+            //Mail ve şifre databasede var mı
+            var customerdb = _customerService.GetByLoginFilter(model);
+              
+            if (customerdb == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
 
-                //return View (customerdb);
-               // Eğer giriş başarılıysa, veriyi JSON olarak döndürüyoruz
-                return Json(new { success = true, customerdb = customerdb });
-            //}
-            //// eğer giriş başarısız olursa, hata mesajlarını JSON verisi olarak gönderiyoruz
-            //var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-            //return Json(new { success = false, errors = errors });
+            //return View (customerdb);
+            // Eğer giriş başarılıysa, veriyi JSON olarak döndürüyoruz
+            return Json(new { success = true, customerdb = customerdb });           
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);  //Cookieyi kapat
+            return RedirectToAction(nameof(Login));
         }
     }
 }
