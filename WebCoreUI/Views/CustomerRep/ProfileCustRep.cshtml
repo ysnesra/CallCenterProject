@@ -1,5 +1,33 @@
-﻿<div class="row">
-    <div class="col">
-        <h1 class="display-4">Müşteri Temsilcisi Sayfası</h1>
+﻿@model List<Entities.DTOs.RequestListByCustomerDto>
+
+@{
+    ViewData["Title"] = "Müşteri Temsilcisi Sayfası";   //Layout sayfaındaki ViewData kısmını bu değerle doldurur
+}
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
     </div>
 </div>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark b" style="background-color: #e3f2fd;">
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">    
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Talepler
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" asp-controller="Request" asp-action="RequestList"><i class="fa-regular fa-notebook"></i>Müşteri Talepleri</a>
+                     </li>
+                    <li>
+                        <a class="dropdown-item" asp-controller="Request" asp-action="RequestFinishedList"><i class="fa-regular fa-notebook"></i>İlgilenilen Talepler</a>
+                    </li>              
+                </ul>
+            </li>
+        </ul>        
+    </div>
+</nav>

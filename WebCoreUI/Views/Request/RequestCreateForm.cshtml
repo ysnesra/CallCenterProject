@@ -1,27 +1,33 @@
 ﻿@model Entities.DTOs.RequestCreateDto
 
-<h2>Talep Formu</h2>
 
-
-<form asp-action="RequsetCreate" asp-controller="Request" data-val="true" method="post">
-
-    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
-
-    <div class="form-group mt-3">       
-        <label asp-for="RequestTypeId">Talep Türü</label>
-        <br />
-        <select asp-for="RequestTypeId" name="RequestTypeId" asp-items="ViewBag.RequestTypes ">
-            <option value="0">Talep Türü seçiniz</option>
-        </select>    
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">Talep Formu</h1>
     </div>
+</div>
 
-    <div class="form-group mt-3">
-        <label class ="frm-label " for="Description">Taleplerinizi bizimle paylaşabilirsiniz</label>
-        <textarea asp-for="Description" value="@Model.Description" class="form-control mb-3" rows="10" cols="30" placeholder="talebiniz..."></textarea>
-        <span asp-validation-for="Description" class="text-danger small"></span>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Yeni Talep Oluştur</h5>
+        <form asp-action="RequsetCreate" asp-controller="Request" data-val="true" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+            <div class="form-group mt-3">
+                <label asp-for="RequestTypeId" class="form-label">Talep Türü</label>
+                <select asp-for="RequestTypeId" name="RequestTypeId" asp-items="ViewBag.RequestTypes" class="form-select">
+                    <option value="0">Talep Türü seçiniz</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Description" class="form-label">Taleplerinizi bizimle paylaşabilirsiniz</label>
+                <textarea asp-for="Description" value="@Model.Description" class="form-control mb-3" rows="10" cols="30" placeholder="talebiniz..."></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-primary" asp-route-id="@ViewBag.RequestTypeId" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+            </div>
+        </form>
     </div>
-   
-    <br />
-    <button class="btn btn-secondary " asp-route-id="@ViewBag.RequestTypeId" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Gönder</button>
+</div>
 
-</form>

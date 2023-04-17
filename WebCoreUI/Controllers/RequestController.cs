@@ -26,9 +26,6 @@ namespace WebCoreUI.Controllers
             var response = _requestService.GetRequestByEmail(emailForClaim);
 
             return View(response);
-
-            //Claimdeki Id yi almak istesydik:   
-            //int userId=int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
 
         //Talep Ekleme Form Ekranı
@@ -40,10 +37,26 @@ namespace WebCoreUI.Controllers
         [HttpPost]
         public IActionResult RequestCreate(RequestCreateDto model)
         {
+            //Claimdeki Id : 
             int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             
             _requestService.AddRequestCreateDto(model,customerId);
             return RedirectToAction(nameof(RequestListByCustomerId));
+        }
+
+        //Bütün Taleplerin Listesi
+        public IActionResult RequestList()
+        {
+            var response = _requestService.GetAllRequestList();
+            return View(response);
+        }
+
+        //Müşteri Temsilcisinin Talebi Aldığı Method
+        public IActionResult RequestCheckByCustomerRep(RequestAllListDto model)
+        {
+            var response = _requestService.RequestDetailByCustomerRep(model);
+            return View("RequestDetailForm", response);
+           
         }
 
 

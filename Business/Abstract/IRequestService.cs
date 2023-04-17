@@ -15,5 +15,10 @@ namespace Business.Abstract
 
         //Talep Ekleme
         void AddRequestCreateDto(RequestCreateDto model, int customerId);
+
+        List<RequestAllListDto> GetAllRequestList();
+
+        //Müşteri Temsilcisi için Bütün Talepleri listeleme
+        RequestAllListDto RequestDetailByCustomerRep(RequestAllListDto model);
     }
 }

@@ -26,7 +26,7 @@ namespace WebCoreUI.Controllers
             this._httpContextAccessor = httpContextAccessor;
         }
         //Müşteri Ekranı 
-        public IActionResult Profile()
+        public IActionResult ProfileCust()
         {
             return View();
         }

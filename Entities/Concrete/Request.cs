@@ -20,7 +20,7 @@ namespace Entities.Concrete
         public int RequestTypeId { get; set; }
         public int StatusId { get; set; }
         public int CustomerId { get; set; }
-        public int CustomerRepId { get; set; }
+        public int? CustomerRepId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual CustomerRep CustomerRep { get; set; }
         public virtual RequestType RequestType { get; set; }

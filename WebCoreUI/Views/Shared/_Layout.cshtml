@@ -7,6 +7,8 @@
     <title>@ViewData["Title"] - WebCoreUI</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebCoreUI.styles.css" asp-append-version="true" />
 </head>
@@ -42,7 +44,7 @@
                             (User.IsInRole("customer"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Profile"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="ProfileCust"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
                                 </li>
                             }
                             <li class="nav-item ms-auto">

@@ -1,7 +1,7 @@
-﻿@model List<Entities.DTOs.RequestListByCustomerDto>
+﻿@model List<Entities.DTOs.RequestAllListDto>
 
 @{
-    ViewData["Title"] = "TALEPLERİM";
+    ViewData["Title"] = "MÜŞTERİ TALEPLERİ";
 }
 
 <div class="container">
@@ -11,14 +11,6 @@
         </div>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-12">
-            <a asp-action="RequestCreate" asp-controller="Request" class="btn btn-primary">
-                <i class="fa-sharp fa-solid fa-plus"></i>
-                Talep Ekle
-            </a>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-12">
@@ -27,20 +19,28 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>Müşteri</th>
                                 <th>Talep Tarihi</th>
                                 <th>Talep</th>
                                 <th>Talep Türü</th>
                                 <th>Durum</th>
+                                <th>Müşteri Temsilcisi</th>
+                                <th>  </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
+                                    <td>@item.CustomerName</td>
                                     <td>@item.CreateDate.ToString("dd MMMM yyyy")</td>
                                     <td>@item.Description</td>
                                     <td>@item.RequestTypeName</td>
                                     <td>@item.StatusName</td>
+                                    <td>@item.CustomerRepName</td>
+                                    <td>
+                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>Talebi Al</a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

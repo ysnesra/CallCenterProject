@@ -16,5 +16,7 @@ namespace DataAccess.Abstract
 
         //TalepTürlerini listeler
         List<RequestTypeDto> GetRequestTypes();
+
+        List<RequestAllListDto> GetAllRequestDetail();
     }
 }

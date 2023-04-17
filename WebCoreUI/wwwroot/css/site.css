@@ -16,3 +16,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*ProfileCust ve ProfileCustRep sayfasýndaki*/
+.navbar-dark .navbar-nav .nav-link {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: black;
+}
+
+.dropdown-item {
+    font-size: 1.1em;  
+    color: black;
+}
+
+
+
