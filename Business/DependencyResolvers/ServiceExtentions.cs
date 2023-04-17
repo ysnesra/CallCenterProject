@@ -29,7 +29,7 @@ namespace Business.DependencyResolvers
             services.AddSingleton<IRequestService, RequestManager>();
             services.AddSingleton<IRequestDal, EfRequestDal>();
 
-            services.AddSingleton<ITokenHelper, JwtHelper>();
+            //services.AddSingleton<ITokenHelper, JwtHelper>();
 
  
             return services;

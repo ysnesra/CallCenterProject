@@ -1,4 +1,5 @@
 ﻿using Entities.DTOs;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace Business.Abstract
 {
     public interface IRequestService
     {
-        //List<RequestListByCustomerDto> GetRequestByEmail(string email);
+        List<RequestListByCustomerDto> GetRequestByEmail(string email);
+        List<SelectListItem> GetBySelectListRequestTypes();
+
+        //Talep Ekleme
+        void AddRequestCreateDto(RequestCreateDto model, int customerId);
     }
 }

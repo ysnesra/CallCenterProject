@@ -17,13 +17,10 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
         private ICustomerDal _customerDal;
-        private ITokenHelper _tokenHelper;
-       
-        public CustomerManager(ICustomerDal customerDal, ITokenHelper tokenHelper)
+        
+        public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
-            _tokenHelper = tokenHelper;
-
         }
 
         public void AddCustomerDto(CustomerRegisterDto model)

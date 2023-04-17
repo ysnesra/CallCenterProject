@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,10 @@ namespace DataAccess.Abstract
 {
     public interface IRequestDal : IEntityRepository<Request>
     {
+        //Müşterinin mail adresine göre Taleplerini görüntüleme
+        List<RequestListByCustomerDto> GetRequestByEmail(string email);
+
+        //TalepTürlerini listeler
+        List<RequestTypeDto> GetRequestTypes();
     }
 }

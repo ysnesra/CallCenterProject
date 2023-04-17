@@ -1,0 +1,27 @@
+﻿@model Entities.DTOs.RequestCreateDto
+
+<h2>Talep Formu</h2>
+
+
+<form asp-action="RequsetCreate" asp-controller="Request" data-val="true" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+    <div class="form-group mt-3">       
+        <label asp-for="RequestTypeId">Talep Türü</label>
+        <br />
+        <select asp-for="RequestTypeId" name="RequestTypeId" asp-items="ViewBag.RequestTypes ">
+            <option value="0">Talep Türü seçiniz</option>
+        </select>    
+    </div>
+
+    <div class="form-group mt-3">
+        <label class ="frm-label " for="Description">Taleplerinizi bizimle paylaşabilirsiniz</label>
+        <textarea asp-for="Description" value="@Model.Description" class="form-control mb-3" rows="10" cols="30" placeholder="talebiniz..."></textarea>
+        <span asp-validation-for="Description" class="text-danger small"></span>
+    </div>
+   
+    <br />
+    <button class="btn btn-secondary " asp-route-id="@ViewBag.RequestTypeId" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Gönder</button>
+
+</form>
