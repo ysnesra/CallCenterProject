@@ -19,6 +19,6 @@ namespace Business.Abstract
         List<RequestAllListDto> GetAllRequestList();
 
         //Müşteri Temsilcisi için Bütün Talepleri listeleme
-        RequestAllListDto RequestDetailByCustomerRep(RequestAllListDto model);
+        RequestAllListDto RequestDetailByCustomerRep(int requestId, string emailForClaim);
     }
 }

@@ -18,8 +18,7 @@
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th>    </th>
+                            <tr>                              
                                 <th>Müşteri</th>
                                 <th>Talep Tarihi</th>
                                 <th>Talep</th>
@@ -33,7 +32,6 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.RequestId</td>
                                     <td>@item.CustomerName</td>
                                     <td>@item.CreateDate.ToString("dd MMMM yyyy")</td>
                                     <td>@item.Description</td>
@@ -41,7 +39,7 @@
                                     <td>@item.StatusName</td>
                                     <td>@item.CustomerRepName</td>
                                     <td>
-                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" asp-route-requestId="@item.RequestId class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>Talebi Al</a>
+                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" asp-route-requestId="@item.RequestId" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i> Talebi Al</a>
                                     </td>
                                 </tr>
                             }

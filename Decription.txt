@@ -29,22 +29,29 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
 	 Böylece; Cookie Çerezdeki token sayesinde kullanýcý sonraki isteklerinde sunucu tarafýndan tanýnýr.
   *Bu token ile Authenticate ve Authorize iþlemleri yapýldý.
 
-  !!!!
   Burda Authorize iþlemini Layout tarafýnda " @if (User.Identity.IsAuthenticated)" kodu sürekli false geldiði çalýþmadýðý için yöntem deðiþikliðine gidildi:
-  JWT Tokený -> Cookieye Ajax ile yüklemek yerine Controllerda CookiesAppend() metotuyla yüklendi. 
-
-	 ***************jwt ekran fotosu************************
-
-  !!!!
-  Authorize iþlemi yapamadýðým için; Cookie Authentication yönt kullanýldý.
+      -JWT Tokený -> Cookieye Ajax ile yüklemek yerine Controllerda CookiesAppend() metotuyla yüklendi.Buda olmayýnca; 
+       Cookie Authentication yönt kullanýldý.
 
 8.Müþteri login olduktan sonra Anasayfada neleri görecek belirlemek için;
-  Layout.cshtml sayfasýna if bloðu ile kontrol edilir.
+  Layout.cshtml sayfasýna if bloðu ile kontrol edildi.
 
 9.Customer tablosuna "Role" kolonu eklendi. Defaultu customer belirlendi.
   Layot sayfasýnda Authenticate mi eðer Authenticate olduysa Rolüne göre Anasayfada göreceði butonlar ayarlandý
   Eðer rolü customerRep ise "Müþteri Temsilcisi" butonunu görebilecek.
 
+10.Müþteri tarafýnda(Customer);
+   * Müþteri Sayfasý
+   * Taleplerim Sayfasý
+   * Talep Formu Sayfasý yapýldý.
+   Müþteri Talep ekleyebiliyor ve Taleplerini tarih sýrasýna göre görebiliyor.
+
+11.Müþteri Temsilcisi tarafýnda(CustomerRep);
+   * Müþteri Temsilcisi Sayfasý
+   * Müþteri Talepleri Sayfasý
+   * Ýlgilenilen Talepler Sayfasý
+   * Talep Detaylarý Sayfasý
+   * Talep Görüþme Sayfasý
 
 
 

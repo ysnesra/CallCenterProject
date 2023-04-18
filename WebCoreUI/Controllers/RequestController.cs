@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -52,9 +53,12 @@ namespace WebCoreUI.Controllers
         }
 
         //Müşteri Temsilcisinin Talebi Aldığı Method
-        public IActionResult RequestCheckByCustomerRep(RequestAllListDto model)
+        //Talep Detay sayfasına geçer 
+        public IActionResult RequestCheckByCustomerRep(int requestId)
         {
-            var response = _requestService.RequestDetailByCustomerRep(model);
+            string emailForClaim = User.FindFirstValue("Email");
+            
+            var response = _requestService.RequestDetailByCustomerRep(requestId, emailForClaim);
             return View("RequestDetailForm", response);
            
         }

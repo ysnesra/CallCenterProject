@@ -14,9 +14,12 @@ namespace DataAccess.Abstract
         //Müşterinin mail adresine göre Taleplerini görüntüleme
         List<RequestListByCustomerDto> GetRequestByEmail(string email);
 
-        //TalepTürlerini listeler
+        //TalepTürlerini listeleme
         List<RequestTypeDto> GetRequestTypes();
 
-        List<RequestAllListDto> GetAllRequestDetail();
+        List<RequestAllListDto> GetAllRequestListDetail();
+
+        //Bir Talebin detaylarını ayrıntılı getirme
+        RequestAllListDto GetRequestDetail(int requestId, string emailForClaim,int statusId);
     }
 }

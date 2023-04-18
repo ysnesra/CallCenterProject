@@ -1,7 +1,7 @@
-﻿@model List<Entities.DTOs.RequestAllListDto>
+﻿@model Entities.DTOs.RequestAllListDto
 
 @{
-    ViewData["Title"] = "MÜŞTERİ TALEPLERİ";
+    ViewData["Title"] = "TALEP DETAYLARI";
 }
 
 <div class="container">
@@ -29,20 +29,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
-                            {
+                          
+                            
                                 <tr>
-                                    <td>@item.CustomerName</td>
-                                    <td>@item.CreateDate.ToString("dd MMMM yyyy")</td>
-                                    <td>@item.Description</td>
-                                    <td>@item.RequestTypeName</td>
-                                    <td>@item.StatusName</td>
-                                    <td>@item.CustomerRepName</td>
+                                    <td>@Model.CustomerName</td>
+                                    <td>@Model.CreateDate.ToString("dd MMMM yyyy")</td>
+                                    <td>@Model.Description</td>
+                                    <td>@Model.RequestTypeName</td>
+                                    <td>@Model.StatusName</td>
+                                    <td>@Model.CustomerRepName</td>
                                     <td>
-                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>Talebi Al</a>
+                                    <a asp-action="RequestCall" asp-controller="Request" class="btn btn-primary"><i class="fa-solid fa-phone-volume"></i> Talep Görüşme</a>
                                     </td>
                                 </tr>
-                            }
+                            
                         </tbody>
                     </table>
                 </div>

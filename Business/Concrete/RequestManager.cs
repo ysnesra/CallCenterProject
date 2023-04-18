@@ -71,29 +71,14 @@ namespace Business.Concrete
         //Müşteri Temsilcisi için Bütün Talepleri listeleme
         public List<RequestAllListDto> GetAllRequestList()
         {
-            var result = _requestDal.GetAllRequestDetail();
+            var result = _requestDal.GetAllRequestListDetail();
             return result;
         }
         //Müşteri Temsilcisinin Talebin Detayına gittiği Method
-        public RequestAllListDto RequestDetailByCustomerRep(RequestAllListDto model)
+        public RequestAllListDto RequestDetailByCustomerRep(int requestId,string emailForClaim)
         {
-
-            var dbRequest = _requestDal.Get(x => x.RequestId ==model.RequestId);
-
-            RequestAllListDto requestDto = new ()
-            {
-                RequestId = dbRequest.RequestId,
-                CustomerId = dbRequest.CustomerId,
-                CreateDate = DateTime.Now,
-                Description = dbRequest.Description,
-                CustomerRepId = dbRequest.CustomerRep == null ? default(int) : dbRequest.CustomerRep.CustomerRepId,
-                CustomerName = $"{dbRequest.Customer.FirstName}{dbRequest.Customer.LastName}",
-                CustomerRepName = $"{dbRequest.CustomerRep.FirstName}{dbRequest.CustomerRep.LastName}",
-                RequestTypeId = dbRequest.RequestTypeId,
-                RequestTypeName = dbRequest.RequestType.RequestTypeName,
-                StatusId = 2,
-                StatusName = dbRequest.Status.StatusName
-            };
+            int statusId = 2;
+            var requestDto = _requestDal.GetRequestDetail(requestId, emailForClaim, statusId);
             return requestDto;
         }
     }

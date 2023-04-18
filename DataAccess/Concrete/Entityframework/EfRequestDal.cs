@@ -23,6 +23,7 @@ namespace DataAccess.Concrete.Entityframework
                                 .Include(r => r.Status)
                                 .Include(r => r.RequestType)
                                 .Where(r => r.Customer.Email == email)
+                                .OrderByDescending(r => r.CreateDate)
                                 .Select(r => new RequestListByCustomerDto
                                 {
                                     RequestId = r.RequestId,
@@ -54,7 +55,7 @@ namespace DataAccess.Concrete.Entityframework
             }
         }
 
-        public List<RequestAllListDto> GetAllRequestDetail()
+        public List<RequestAllListDto> GetAllRequestListDetail()
         {
             using (CallCenterDbContext context = new CallCenterDbContext())
             {          
@@ -62,7 +63,7 @@ namespace DataAccess.Concrete.Entityframework
                                 .Include(r => r.Customer)
                                 .Include(r => r.Status)
                                 .Include(r => r.RequestType)
-                                .Include(r => r.CustomerRep)
+                                .Include(r => r.CustomerRep)                            
                                 .Select(r => new RequestAllListDto
                                 {
                                     RequestId = r.RequestId,
@@ -81,5 +82,87 @@ namespace DataAccess.Concrete.Entityframework
 
             }
         }
+
+        //public RequestAllListDto GetRequestDetail(int requestId, string emailForClaim,int statusId)
+        //{
+        //    using (CallCenterDbContext context = new CallCenterDbContext())
+        //    {
+                
+        //        var result = context.Requests
+        //                        .Include(r => r.Customer)
+        //                        .Include(r => r.Status)
+        //                        .Include(r => r.RequestType)
+        //                        .Include(r => r.CustomerRep)
+        //                        .Where(r => r.RequestId == requestId )
+        //                        .Select(r => new RequestAllListDto
+        //                        {
+        //                            RequestId = r.RequestId,
+        //                            CustomerId = r.CustomerId,
+        //                            CustomerRepId = r.CustomerRep == null ? default(int) : r.CustomerRep.CustomerRepId,
+        //                            CreateDate = r.CreateDate,
+        //                            Description = r.Description,
+        //                            CustomerName = $"{r.Customer.FirstName}{r.Customer.LastName}",
+        //                            CustomerRepName = emailForClaim,/*$"{r.CustomerRep.FirstName}{r.CustomerRep.LastName}",*/
+        //                            RequestTypeName = r.RequestType.RequestTypeName,
+        //                            StatusId=statusId,
+        //                            StatusName = r.Status.StatusName
+
+        //                        }).FirstOrDefault();
+
+        //        return result;
+
+        //    }
+        //}
+
+        public RequestAllListDto GetRequestDetail(int requestId, string emailForClaim, int statusId)
+        {
+            using (CallCenterDbContext context = new CallCenterDbContext())
+            {
+
+                var result = context.Requests
+                                .Include(r => r.Customer)
+                                .Include(r => r.Status)
+                                .Include(r => r.RequestType)
+                                .Include(r => r.CustomerRep)
+                                .Where(r => r.RequestId == requestId)
+                                .Select(r => new RequestAllListDto
+                                {
+                                    RequestId = r.RequestId,
+                                    CustomerId = r.CustomerId,
+                                    CustomerRepId = r.CustomerRep == null ? default(int) : r.CustomerRep.CustomerRepId,
+                                    CreateDate = r.CreateDate,
+                                    Description = r.Description,
+                                    CustomerName = $"{r.Customer.FirstName}{r.Customer.LastName}",
+                                    CustomerRepName = emailForClaim,/*$"{r.CustomerRep.FirstName}{r.CustomerRep.LastName}",*/
+                                    RequestTypeName = r.RequestType.RequestTypeName,
+                                    StatusId = statusId,
+                                    StatusName = r.Status.StatusName,
+                                    RequestTypeId=r.RequestTypeId
+
+                                }).FirstOrDefault();
+
+                //Update işlemi
+                if (context.CustomerReps.Any(x=>x.Email==emailForClaim))
+                {
+                    var customerRepId = context.CustomerReps.FirstOrDefault(x => x.Email == emailForClaim).CustomerRepId;
+                    var dbStatusId= context.Statuses.FirstOrDefault(x=>x.StatusId==statusId).StatusId;
+
+                    var resultEdit = context.Requests.Update(new Request
+                    {
+                        RequestId = result.RequestId,
+                        CreateDate=result.CreateDate,
+                        Description=result.Description,
+                        RequestTypeId = result.RequestTypeId,
+                        StatusId=dbStatusId,
+                        CustomerId=result.CustomerId,   
+                        CustomerRepId=customerRepId
+                    });
+                    context.SaveChanges();
+                }
+                return result;
+
+            }
+        }
+
     }
 }
