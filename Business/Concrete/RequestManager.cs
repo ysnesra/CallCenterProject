@@ -81,5 +81,6 @@ namespace Business.Concrete
             var requestDto = _requestDal.GetRequestDetail(requestId, emailForClaim, statusId);
             return requestDto;
         }
+      
     }
 }

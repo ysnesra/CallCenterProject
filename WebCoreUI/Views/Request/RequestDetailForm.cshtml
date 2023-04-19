@@ -39,7 +39,7 @@
                                     <td>@Model.StatusName</td>
                                     <td>@Model.CustomerRepName</td>
                                     <td>
-                                    <a asp-action="RequestCall" asp-controller="Request" class="btn btn-primary"><i class="fa-solid fa-phone-volume"></i> Talep Görüşme</a>
+                                    <a asp-action="CallCreate" asp-controller="Call" asp-route-requestId="@Model.RequestId" class="btn btn-primary"><i class="fa-solid fa-phone-volume"></i> Talep Görüşme</a>
                                     </td>
                                 </tr>
                             

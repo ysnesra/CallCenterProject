@@ -1,0 +1,42 @@
+﻿@model Entities.DTOs.CallDto
+
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">Görüşme Formu</h1>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Görüşme Bilgilerini Gir</h5>
+        <form asp-action="CallCreate" asp-controller="Call" data-val="true" method="post" enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+              
+            <label for="CallDate">Görüşme Tarihi</label>
+            <input asp-for="CallDate" value="@Model.CallDate" type="date" class="form-control" />
+            <span asp-validation-for="CallDate" class="text-danger small"></span>
+            <br />
+
+            <label for="CallTime">Görüşme Süresi</label>
+            <input asp-for="CallTime" value="@Model.CallTime" class="form-control" />
+            <span class="small"><i class="fa fa-info-circle me-2"></i>(dakika cinsinden)</span>
+            <span asp-validation-for="CallTime" class="text-danger small"></span>
+            <br />
+            <br />
+
+            <label for="CallNote">Görüşme Notu</label>
+            <textarea asp-for="CallNote" value="@Model.CallNote" class="form-control mb-3" rows="10" cols="30" placeholder="Çözümler..."></textarea>
+            <span asp-validation-for="CallNote" class="text-danger small"></span>
+            <br />
+
+            <br />
+            <button class="btn btn-secondary" asp-route-requestId="@Model.RequestId" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+
+        </form>
+    </div>
+</div>
+

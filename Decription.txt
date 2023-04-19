@@ -53,5 +53,12 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
    * Talep Detaylarý Sayfasý
    * Talep Görüþme Sayfasý
 
+12.Müþteri Temsilcisi
+   Müþteri Talepleri sayfasýndan "Talep Al" butonuna týklayýnca -> Talep Detaylarý sayfasý açýlýr
+   Müþteri Temsilcisi talebi alýnca; Request tablsunda StatusId=2 ve CustomerRepId ye deðer atanarak güncelleme yapýldý. Artýk bu Talep, müþteri temsilcisine atandý ve durumu "talep deðerlendiriliyor"a çekildi.
 
+13.Talep Detaylarý sayfasýndan "Talep Görüþme" butonuna týklayýnca -> Talep Görüþme sayfasý açýlýr
+   Müþteri Temsilcisi görüþmenin notlarýný alýp Kaydet butonua týklayýnca ve Call tablosuna kaydedilir
+
+  
 

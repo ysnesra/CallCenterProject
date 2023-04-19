@@ -63,6 +63,12 @@ namespace WebCoreUI.Controllers
            
         }
 
+        
+        //Tamamnlanmış Talepleri Listeleyen method
+         public IActionResult RequestCompletedList()
+        {
+            return View();
+        }
 
 
 

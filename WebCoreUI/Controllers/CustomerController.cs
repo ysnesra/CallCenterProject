@@ -96,36 +96,37 @@ namespace WebCoreUI.Controllers
         //} 
         #endregion
 
-        [AllowAnonymous]
+        
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Login(CustomerLoginDto model)
         {
-            //Mail ve şifre eşleşiyor mu
-            var existCustomer = _customerService.GetByLoginFilter(model);
-            if (existCustomer == null)
+            ModelState.Remove("CustomerId");
+            ModelState.Remove("Role");
+
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Login));
+                //Mail ve şifre eşleşiyor mu
+                var existCustomer = _customerService.GetByLoginFilter(model);
+                if (existCustomer == null)
+                {
+                    return RedirectToAction(nameof(Login));
+                }
+
+                List<Claim> claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, existCustomer.CustomerId.ToString()));
+                claims.Add(new Claim("Email", existCustomer.Email));
+                claims.Add(new Claim("Password", existCustomer.Password));
+                claims.Add(new Claim(ClaimTypes.Role, existCustomer.Role));
+
+                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                return RedirectToAction("Index", "Home");
             }
-
-            //Claims listesi oluşturp cookide neleri tutulacağı tanımlandı
-            //ClaimTypes.... diyerek hazır claim nesnelerinde tutar
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, existCustomer.CustomerId.ToString()));
-            claims.Add(new Claim("Email", existCustomer.Email));
-            claims.Add(new Claim("Password", existCustomer.Password));
-            claims.Add(new Claim(ClaimTypes.Role, existCustomer.Role));
-
-            //ClaimsIdentity nesnesi içerisine claimleri ekliyor.Hangi Authentication ı kullanılıyorsa onu da parametre olarak verilir//CookieAuthentication
-            ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme
-                );
-            //ClaimsPrincipal bizden ClaimsIdentity nesnemizi ister
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            return RedirectToAction("Index", "Home");
-
-
             return View(model);
         }
 

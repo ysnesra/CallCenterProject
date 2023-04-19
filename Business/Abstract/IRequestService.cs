@@ -20,5 +20,6 @@ namespace Business.Abstract
 
         //Müşteri Temsilcisi için Bütün Talepleri listeleme
         RequestAllListDto RequestDetailByCustomerRep(int requestId, string emailForClaim);
+
     }
 }
