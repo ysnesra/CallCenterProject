@@ -36,3 +36,8 @@ Talebin durumu “Talep çözüldü” olarak değişir ve “Kapanan Talepler�
 ![4MüştTemsilcisiSayfaısnaDöner](https://user-images.githubusercontent.com/104023688/233316930-8c04ccf6-15e2-4583-9436-47787f7d2a69.png)
 
 ![5ÇözülenTalepler](https://user-images.githubusercontent.com/104023688/233316953-f07fc1a9-32f9-4bac-838a-784ff15bba87.JPG)
+
+
+ - Database:
+ 
+![database](https://user-images.githubusercontent.com/104023688/233321558-d3e06cc1-535d-4caf-8583-162e3dbf3284.JPG)
