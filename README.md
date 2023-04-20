@@ -40,4 +40,5 @@ Talebin durumu “Talep çözüldü” olarak değişir ve “Kapanan Talepler�
 
  - Database:
  
-![database](https://user-images.githubusercontent.com/104023688/233321558-d3e06cc1-535d-4caf-8583-162e3dbf3284.JPG)
+![database](https://user-images.githubusercontent.com/104023688/233322293-c7206154-7405-4b51-bf67-2a6f5a1a3cf6.jpg)
+
