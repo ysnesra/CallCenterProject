@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace Business.Abstract
 {
     public interface ICallService
-    {
-        void AddCallDto(CallDto model, int customerId, string emailForClaim);
+    {  
+        void AddCallDto(CallDto model, string emailForClaim);
+
     }
 }

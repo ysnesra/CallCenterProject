@@ -81,6 +81,13 @@ namespace Business.Concrete
             var requestDto = _requestDal.GetRequestDetail(requestId, emailForClaim, statusId);
             return requestDto;
         }
-      
+
+        //Çözülmüş Talepler
+        public List<RequestCompletedListDto> GetRequestCompletedList()
+        {
+            var result = _requestDal.GetRequestCompletedListDto();
+            return result;
+        }
+
     }
 }

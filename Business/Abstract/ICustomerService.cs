@@ -12,8 +12,6 @@ namespace Business.Abstract
     public interface ICustomerService
     {
         void AddCustomerDto(CustomerRegisterDto model);
-        CustomerLoginDto GetByLoginFilter(CustomerLoginDto model);
-
-        
+        CustomerLoginDto GetByLoginFilter(CustomerLoginDto model);        
     }
 }

@@ -23,7 +23,7 @@ namespace WebCoreUI.Controllers
         //Hangi müşteri login olduysa onun Taleplerini gösteren method
         public IActionResult RequestListByCustomerId()
         {
-            string emailForClaim = User.FindFirstValue("Email");   //Email bilgisini direk cookieden alırız
+            string emailForClaim = User.FindFirstValue("Email");   
             var response = _requestService.GetRequestByEmail(emailForClaim);
 
             return View(response);
@@ -57,7 +57,8 @@ namespace WebCoreUI.Controllers
         public IActionResult RequestCheckByCustomerRep(int requestId)
         {
             string emailForClaim = User.FindFirstValue("Email");
-            
+            ViewBag.RequestId = requestId;
+
             var response = _requestService.RequestDetailByCustomerRep(requestId, emailForClaim);
             return View("RequestDetailForm", response);
            
@@ -67,7 +68,8 @@ namespace WebCoreUI.Controllers
         //Tamamnlanmış Talepleri Listeleyen method
          public IActionResult RequestCompletedList()
         {
-            return View();
+            var response = _requestService.GetRequestCompletedList();
+            return View(response);
         }
 
 

@@ -2,9 +2,11 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 
 
@@ -13,29 +15,28 @@ namespace DataAccess.Concrete.Entityframework
     public class EfCallDal : EfEntityRepositoryBase<Call, CallCenterDbContext>, ICallDal
     {
         //Müşteri Temsilcisi Görüşme Form Ekranından Ekleme
-        public void AddRequestCall(CallDto model, int customerId, string emailForClaim, int statusId)
+        public void AddRequestCall(CallDto formdata,string emailForClaim)
         {
             using (CallCenterDbContext context = new CallCenterDbContext())
             {
-                if (context.CustomerReps.Any(x => x.Email == emailForClaim))
+                var customerRepId = context.CustomerReps.First(x => x.Email == emailForClaim).CustomerRepId;
+                
+                Call call = new Call
                 {
-                    var customerRepId = context.CustomerReps.FirstOrDefault(x => x.Email == emailForClaim).CustomerRepId;
-                    var dbStatusId = context.Statuses.FirstOrDefault(x => x.StatusId == statusId).StatusId;
+                    CallDate = formdata.CallDate,
+                    CallTime = formdata.CallTime,
+                    CallNote = formdata.CallNote,
+                    RequestId = formdata.RequestId,
+                    CustomerId = formdata.CustomerId,
+                    CustomerRepId = customerRepId,
+                };
+                context.Calls.Add(call);
+                context.SaveChanges();
 
-                    var resultAdd = context.Calls.Add(new Call
-                    {
-                        CallRecord = model.CallRecord,
-                        CallDate = model.CallDate,
-                        CallTime = model.CallTime,
-                        CallNote = model.CallNote,
-                        CustomerId = customerId,
-                        CustomerRepId = customerRepId,
-                        RequestId = model.RequestId,
 
-                    });
-                    context.SaveChanges();
-                }
-
+                var requestUpdated = context.Requests.Single(x => x.RequestId == call.RequestId);
+                requestUpdated.StatusId = 3;
+                context.SaveChanges();
             }
         }
     }

@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.Data.SqlClient.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,9 @@ namespace Business.Concrete
         }
 
         //Müşteri Temsilcisi Görüşme Form Ekranından ekleme
-        public void AddCallDto(CallDto model, int customerId, string emailForClaim)
+        public void AddCallDto(CallDto model, string emailForClaim)
         {
-            int statusId = 3;
-            _callDal.AddRequestCall(model, customerId, emailForClaim, statusId);
-
+            _callDal.AddRequestCall(model, emailForClaim);
         }
     }
 }

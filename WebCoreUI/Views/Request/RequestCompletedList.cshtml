@@ -1,7 +1,7 @@
-﻿@model Entities.DTOs.RequestAllListDto
+﻿@model List<Entities.DTOs.RequestCompletedListDto>
 
 @{
-    ViewData["Title"] = "TALEP DETAYLARI";
+    ViewData["Title"] = "ÇÖZÜLMÜŞ TALEPLER";
 }
 
 <div class="container">
@@ -29,24 +29,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                          
-                            
+                            @foreach (var item in Model)
+                            {
                                 <tr>
-                                    <td>@Model.CustomerName</td>
-                                    <td>@Model.CreateDate.ToString("dd MMMM yyyy")</td>
-                                    <td>@Model.Description</td>
-                                    <td>@Model.RequestTypeName</td>
-                                    <td>@Model.StatusName</td>
-                                    <td>@Model.CustomerRepName</td>
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.CreateDate.ToString("dd MMMM yyyy")</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.RequestTypeName</td>
+                                    <td>@item.StatusName</td>
+                                    <td>@item.CustomerRepName</td>
                                     <td>
-                                    
-                                        @*<a asp-action="CallCreate" asp-controller="Call" asp-route-requestId="@ViewBag.RequestId" class="btn btn-primary"><i class="fa-solid fa-phone-volume"></i> Talep Görüşme</a>*@
-
-                                        <a class="btn btn-primary" href="/Call/CallCreate/@ViewBag.RequestId/@Model.CustomerId"> <i class="fa-solid fa-phone-volume"></i> Talep Görüşme </a>
-
+                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" asp-route-requestId="@item.RequestId" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i> Talebi Al</a>
                                     </td>
                                 </tr>
-                            
+                            }
                         </tbody>
                     </table>
                 </div>

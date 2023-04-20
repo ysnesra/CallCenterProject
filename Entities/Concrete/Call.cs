@@ -5,7 +5,7 @@ namespace Entities.Concrete
     public class Call :IEntity
     {
         public int CallId { get; set; }
-        public string CallRecord { get; set; }
+       
         public DateTime CallDate { get; set; }
         public float CallTime { get; set; }
         public string? CallNote { get; set; }

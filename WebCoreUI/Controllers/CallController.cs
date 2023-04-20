@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient.Server;
+using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace WebCoreUI.Controllers
@@ -13,23 +16,36 @@ namespace WebCoreUI.Controllers
         {
             _callService = callService;
         }
-
-        //Müşteri Temsilcisi Görüşme Form Ekranı
+        
         [HttpGet]
-        public IActionResult CallCreate(int requestId)
+        [Route("Call/CallCreate/{requestId?}/{customerId?}")]
+        public IActionResult CallCreate(int requestId,int customerId)
         {
             CallDto callDto = new CallDto();
-            return View(callDto);     
+
+            ViewBag.RequestId = requestId;
+            ViewBag.CustomerId = customerId;
+          
+            return View(callDto);
         }
+
         [HttpPost]
+        [Route("Call/CallCreate/{requestId?}/{customerId?}")]
         public IActionResult CallCreate(CallDto model)
         {
-            //Claimdeki: 
-            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            string emailForClaim = User.FindFirstValue("Email");
+            ModelState.Remove("CallId");
+            ModelState.Remove("CustomerId");
+            ModelState.Remove("CustomerRepId");
+            if (ModelState.IsValid)
+            {           
+                string emailForClaim = User.FindFirstValue("Email");
 
-            _callService.AddCallDto(model, customerId, emailForClaim);
-            return View("ProfileCustRep", "CustomerRep");
-        }
+                _callService.AddCallDto(model, emailForClaim);               
+                return Redirect("/CustomerRep/ProfileCustRep");
+
+            }
+            return View(model);
+ 
+        }     
     }
 }

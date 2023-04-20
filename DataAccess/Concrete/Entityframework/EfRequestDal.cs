@@ -132,6 +132,34 @@ namespace DataAccess.Concrete.Entityframework
 
             }
         }
-        
+
+        public List<RequestCompletedListDto> GetRequestCompletedListDto()
+        {
+            using (CallCenterDbContext context = new CallCenterDbContext())
+            {
+                var result = context.Requests
+                                .Include(r => r.Customer)
+                                .Include(r => r.Status)
+                                .Include(r => r.RequestType)
+                                .Include(r => r.CustomerRep)
+                                .Where(r=>r.StatusId==3)
+                                .Select(r => new RequestCompletedListDto
+                                {
+                                    RequestId = r.RequestId,
+                                    CustomerId = r.CustomerId,
+                                    CustomerRepId = r.CustomerRep == null ? default(int) : r.CustomerRep.CustomerRepId,
+                                    CreateDate = r.CreateDate,
+                                    Description = r.Description,
+                                    CustomerName = $"{r.Customer.FirstName} {r.Customer.LastName}",
+                                    CustomerRepName = $"{r.CustomerRep.FirstName} {r.CustomerRep.LastName}",
+                                    RequestTypeName = r.RequestType.RequestTypeName,
+                                    StatusName = r.Status.StatusName
+
+                                }).ToList();
+
+                return result;
+
+            }
+        }
     }
 }

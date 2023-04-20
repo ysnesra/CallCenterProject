@@ -21,6 +21,8 @@ namespace DataAccess.Abstract
 
         //Bir Talebin detaylarını ayrıntılı getirme
         RequestAllListDto GetRequestDetail(int requestId, string emailForClaim,int statusId);
-       
+
+        List<RequestCompletedListDto> GetRequestCompletedListDto();
+
     }
 }

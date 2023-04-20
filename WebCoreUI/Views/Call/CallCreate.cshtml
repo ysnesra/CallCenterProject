@@ -11,7 +11,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Görüşme Bilgilerini Gir</h5>
-        <form asp-action="CallCreate" asp-controller="Call" data-val="true" method="post" enctype="multipart/form-data">
+        <form asp-action="CallCreate" asp-controller="Call" data-val="true" method="post" >
 
             <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
@@ -33,10 +33,14 @@
             <span asp-validation-for="CallNote" class="text-danger small"></span>
             <br />
 
+            <input type="hidden" asp-for="RequestId" value="@ViewBag.RequestId" />
+            <input type="hidden" asp-for="CustomerId" value="@ViewBag.CustomerId" />
+
+
             <br />
-            <button class="btn btn-secondary" asp-route-requestId="@Model.RequestId" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+            <button class="btn btn-secondary"  type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
 
         </form>
     </div>
-</div>
 
+</div>
