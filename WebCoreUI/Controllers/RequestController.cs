@@ -63,16 +63,36 @@ namespace WebCoreUI.Controllers
             return View("RequestDetailForm", response);
            
         }
-
-        
-        //Tamamnlanmış Talepleri Listeleyen method
+       
+        //Kapanan Talepleri Listeleyen method
          public IActionResult RequestCompletedList()
         {
             var response = _requestService.GetRequestCompletedList();
             return View(response);
         }
 
+        //Yeni açılan Talepleri Listeleyen method
+        public IActionResult RequestNewList()
+        {
+            var response = _requestService.GetRequestNewList();
+            return View(response);
+        }
 
+        //Değerlendirmede olan Talepleri Listeleyen method
+        public IActionResult RequestContinueList()
+        {
+            var response = _requestService.GetRequestContinueList();
+            return View(response);
+        }
+
+       
+        //Müşteri Temsilcisinin çözdüğü Taleplerin Listesi
+        public IActionResult CustomerRepRequestCompletedList()
+        {
+            string emailForClaim = User.FindFirstValue("Email");
+            var response = _requestService.GetCustomerRepRequestCompletedList(emailForClaim);
+            return View(response);
+        }
 
     }
 }

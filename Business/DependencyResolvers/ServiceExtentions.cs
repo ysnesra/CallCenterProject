@@ -3,6 +3,9 @@ using Business.Concrete;
 using Business.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.Entityframework;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Ini;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,23 +18,28 @@ namespace Business.DependencyResolvers
 {
     public static class ServiceExtentions 
     {
-        public static IServiceCollection ServisRelationShip(this IServiceCollection services)
+        public static IServiceCollection ServisRelationShip(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddSingleton<ICallService, CallManager>();
-            services.AddSingleton<ICallDal, EfCallDal>();
+            services.AddScoped<ICallService, CallManager>();
+            services.AddScoped<ICallDal, EfCallDal>();
 
-            services.AddSingleton<ICustomerService, CustomerManager>();
-            services.AddSingleton<ICustomerDal, EfCustomerDal>();
+            services.AddScoped<ICustomerService, CustomerManager>();
+            services.AddScoped<ICustomerDal, EfCustomerDal>();
 
-            services.AddSingleton<ICustomerRepService, CustomerRepManager>();
-            services.AddSingleton<ICustomerRepDal, EfCustomerRepDal>();
+            services.AddScoped<ICustomerRepService, CustomerRepManager>();
+            services.AddScoped<ICustomerRepDal, EfCustomerRepDal>();
 
-            services.AddSingleton<IRequestService, RequestManager>();
-            services.AddSingleton<IRequestDal, EfRequestDal>();
+            services.AddScoped<IRequestService, RequestManager>();
+            services.AddScoped<IRequestDal, EfRequestDal>();
 
-            //services.AddSingleton<ITokenHelper, JwtHelper>();
+            services.AddScoped<IAdminService, AdminManager>();
+           
 
- 
+            services.AddDbContext<CallCenterDbContext>(opt =>
+            {
+                opt.UseSqlServer(configuration.GetConnectionString("SqlServerConnection"));
+            });
+
             return services;
         }
     }

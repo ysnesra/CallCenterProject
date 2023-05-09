@@ -1,8 +1,10 @@
 using Business.DependencyResolvers;
 using Business.Utilities.Security.Encryption;
 using Business.Utilities.Security.JWT;
+using DataAccess.Concrete.Entityframework;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,8 +15,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 //IocContainer 
 builder.Services.AddBusinessService();   //.net in kendi Ioc Containerýný kulllanýrýz.//DependencyEnjection.cs 'de oluþturugum metotu ekliyorum
-builder.Services.ServisRelationShip();  //.net in kendi IoC Containerýnda katmanlarýný ililþksini yazdýðým extention metotu ekliyorum //ServisRelationShip() -> ServiceExtention.cs de oluþturduðum metot
-
+builder.Services.ServisRelationShip(builder.Configuration);  //.net in kendi IoC Containerýnda katmanlarýný ililþksini yazdýðým extention metotu ekliyorum //ServisRelationShip() -> ServiceExtention.cs de oluþturduðum metot
 
 #region JwtToken
 //JWTBearer kullanýlacaðý belirtilir 

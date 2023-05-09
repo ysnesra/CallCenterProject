@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "TALEPLERİM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
     <div class="row mt-3 mb-3">
         <div class="col-12 text-center">
-            <h1 class="display-4">@ViewData["Title"]</h1>
+            <h1 class="display-4"> @ViewData["Title"]</h1>
         </div>
     </div>
 
@@ -31,6 +32,7 @@
                                 <th>Talep</th>
                                 <th>Talep Türü</th>
                                 <th>Durum</th>
+                                <th>Müşteri Temsilcisi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +43,7 @@
                                     <td>@item.Description</td>
                                     <td>@item.RequestTypeName</td>
                                     <td>@item.StatusName</td>
+                                    <td>@item.CustomerRepName</td>
                                 </tr>
                             }
                         </tbody>

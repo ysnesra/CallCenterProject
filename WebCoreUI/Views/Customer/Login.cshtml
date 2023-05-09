@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Giriş Ekranı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -27,6 +28,7 @@
                             <input asp-for="Password" class="form-control" type="password" placeholder="P@ssW0rd!" />
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
+
 
                         <input type="hidden" name="CustomerId" />
 

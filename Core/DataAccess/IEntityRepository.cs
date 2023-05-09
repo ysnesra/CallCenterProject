@@ -27,5 +27,8 @@ namespace Core.DataAccess
         void Update(T entity);
 
         void Delete(T entity);
+
+        void SaveChanges();
+        Task<T> GetAsync(Expression<Func<T, bool>> filter);
     }
 }

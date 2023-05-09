@@ -25,3 +25,4 @@ namespace Business.DependencyResolvers
 
 //AddFluentValidationAutoValidation ve AddFluentValidationClientsideAdapters metodları, FluentValidation'ın istemci tarafında çalışması için gerekli olan servisleri IServiceCollection nesnesine ekler.
 //AddValidatorsFromAssembly metodu, uygulama içinde bulunan tüm doğrulama kurallarını (validator) IServiceCollection nesnesine ekler. 
+//IValidator'dan türeyen bütün nesneleri bulur ve Assembly den yükler

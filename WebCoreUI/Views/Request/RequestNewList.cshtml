@@ -1,7 +1,7 @@
-﻿@model List<Entities.DTOs.RequestCompletedListDto>
+﻿@model List<Entities.DTOs.RequestNewListDto>
 
 @{
-    ViewData["Title"] = "ÇÖZÜLMÜŞ TALEPLER";
+    ViewData["Title"] = "YENİ AÇILAN TALEPLER";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,7 +26,7 @@
                                 <th>Talep Türü</th>
                                 <th>Durum</th>
                                 <th>Müşteri Temsilcisi</th>
-                               
+                                <th>  </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,9 +39,9 @@
                                     <td>@item.RequestTypeName</td>
                                     <td>@item.StatusName</td>
                                     <td>@item.CustomerRepName</td>
-                                   @* <td>
+                                    <td>
                                         <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" asp-route-requestId="@item.RequestId" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i> Talebi Al</a>
-                                    </td>*@
+                                    </td>
                                 </tr>
                             }
                         </tbody>

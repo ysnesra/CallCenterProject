@@ -22,6 +22,8 @@ namespace Business.Abstract
         RequestAllListDto RequestDetailByCustomerRep(int requestId, string emailForClaim);
 
         List<RequestCompletedListDto> GetRequestCompletedList();
-
+        List<RequestNewListDto> GetRequestNewList();
+        List<RequestContinueListDto> GetRequestContinueList();
+        List<CustomerRepRequestCompletedListDto> GetCustomerRepRequestCompletedList(string emailForClaim);
     }
 }

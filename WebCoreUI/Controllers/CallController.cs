@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace WebCoreUI.Controllers
 {
+    [Route("Call/CallCreate/")]
     public class CallController : Controller
     {
         ICallService _callService;
@@ -18,7 +19,7 @@ namespace WebCoreUI.Controllers
         }
         
         [HttpGet]
-        [Route("Call/CallCreate/{requestId?}/{customerId?}")]
+        [Route("{requestId?}/{customerId?}")]
         public IActionResult CallCreate(int requestId,int customerId)
         {
             CallDto callDto = new CallDto();
@@ -30,11 +31,10 @@ namespace WebCoreUI.Controllers
         }
 
         [HttpPost]
-        [Route("Call/CallCreate/{requestId?}/{customerId?}")]
+        [Route("{requestId?}/{customerId?}")]
         public IActionResult CallCreate(CallDto model)
         {
-            ModelState.Remove("CallId");
-            ModelState.Remove("CustomerId");
+            ModelState.Remove("CallId");            
             ModelState.Remove("CustomerRepId");
             if (ModelState.IsValid)
             {           

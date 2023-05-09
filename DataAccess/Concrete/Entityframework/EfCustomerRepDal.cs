@@ -11,5 +11,10 @@ namespace DataAccess.Concrete.Entityframework
 {
     public class EfCustomerRepDal : EfEntityRepositoryBase<CustomerRep, CallCenterDbContext>, ICustomerRepDal
     {
+        private readonly CallCenterDbContext _context;
+        public EfCustomerRepDal(CallCenterDbContext context) : base(context)
+        {
+            _context = context;
+        }
     }
 }

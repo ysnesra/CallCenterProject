@@ -13,55 +13,55 @@ namespace Core.DataAccess.Entityframework
 
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
         where TEntity : class, IEntity, new()
-        where TContext : DbContext, new()
+        where TContext : DbContext
     {
+
+        private readonly TContext _context;
+
+        public EfEntityRepositoryBase(TContext context)
+        {
+            _context = context;
+        }
+
         public void Add(TEntity entity)
         {
             //using içine yazdığımız nesneler using bitince GarbageCollector tarafından bellekten atılır
-            using (TContext context = new TContext())
-            {
-                var addedEntity = context.Entry(entity);  //eklenen 'entity'yi git veritabanıyla ilişkilendir. referansı yakala
-                addedEntity.State = EntityState.Added;    //o aslında eklenecek bir nesne
-                context.SaveChanges();                    //ve ekle
-            }
+            var addedEntity = _context.Entry(entity);  //eklenen 'entity'yi git veritabanıyla ilişkilendir. referansı yakala
+            addedEntity.State = EntityState.Added;    //o aslında eklenecek bir nesne
         }
 
         public void Delete(TEntity entity)
         {
-            using (TContext context = new TContext())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
+            var deletedEntity = _context.Entry(entity);
+            deletedEntity.State = EntityState.Deleted;
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)  //tek data getirecek metotumuz
         {
-            using (TContext context = new TContext())
-            {
-                return context.Set<TEntity>().SingleOrDefault(filter);
-            }
+            return _context.Set<TEntity>().SingleOrDefault(filter);
+        }
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)  
+        {
+            return await _context.Set<TEntity>().SingleOrDefaultAsync(filter);
         }
 
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            using (TContext context = new TContext())
-            {
-                // context.Set<Product>() ifadesi Dbset deki Productıma yerleş demek
-                return filter == null ? context.Set<TEntity>().ToList()
-                                     : context.Set<TEntity>().Where(filter).ToList();
-            }
+
+            // context.Set<Product>() ifadesi Dbset deki Productıma yerleş demek
+            return filter == null ? _context.Set<TEntity>().ToList()
+                                 : _context.Set<TEntity>().Where(filter).ToList();
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
-            using (TContext context = new TContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            var updatedEntity = _context.Entry(entity);
+            updatedEntity.State = EntityState.Modified;
         }
     }
 }

@@ -16,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CallCenter</a>            
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="AdminIndex">CallCenter Yönetim Paneli</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,30 +25,20 @@
                     <ul class="navbar-nav flex-grow-1">
 
 
+
+
                         @if (User.Identity.IsAuthenticated) //User propertsindeki ıdentitye ulaşıp IsAuthenticated mi diye bakarız
                         {
-                            @if (User.IsInRole("customerRep"))
-                            {
-                                <li class="nav-item ">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="CustomerRep" asp-action="ProfileCustRep"><i class="fa-solid fa-user me-2"></i>Müşteri Temsilcisi</a>
-                                </li>
-                            }
-                            @if(User.IsInRole("customer"))
+                            @if
+                           (User.IsInRole("customer"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="ProfileCust"><i class="fa-solid fa-user me-2"></i>@User.FindFirst("Email").Value</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
                                 </li>
                             }
-                            @if (User.IsInRole("admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminIndex"><i class="fa-solid fa-user me-2"></i>ADMİN PANELİ</a>  @*Claimlerin içinde FindFirst ile "Email" claimini arıyor. Valuue ile değerini oku*@
-                                </li>
-                            }
-
                             <li class="nav-item ms-auto">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Çıkış Yap</a>
-                            </li>                       
+                            </li>
 
                         }
                         else

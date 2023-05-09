@@ -13,11 +13,11 @@ namespace WebCoreUI.Controllers
         {
             return View();
         }
-        [AllowAnonymous]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        //[AllowAnonymous]
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
@@ -29,6 +29,15 @@ namespace WebCoreUI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        /// <summary>
+        /// AdminLayout.cshtml
+        /// </summary>
+        [Authorize(Roles="admin")]
+        public IActionResult AdminIndex()
+        {
+            return View();
         }
     }
 }

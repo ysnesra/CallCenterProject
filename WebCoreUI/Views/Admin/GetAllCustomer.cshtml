@@ -1,0 +1,53 @@
+﻿@model List<Entities.DTOs.CustomerAllListDto>
+
+@{
+    ViewData["Title"] = "BÜTÜN MÜŞTERİLER";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <h1 class="display-4">@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Müşteri Ad</th>
+                                <th>Soyad</th>
+                                <th>Mail</th>
+                                <th>Parola</th>
+                                <th>Telefon</th>
+                                <th>Rolü</th>
+                                <th>  </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Password</td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.Role</td>
+                                    <td>
+                                        <a asp-action="GetRequestListByCustomerId" asp-controller="Admin" asp-route-id="@item.CustomerId" class="btn btn-primary"><i class="fa-regular fa-file-lines"></i> Talepleri</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,14 @@
-﻿@model List<Entities.DTOs.RequestCompletedListDto>
+﻿@model List<Entities.DTOs.RequestListByCustomerDto>
 
 @{
-    ViewData["Title"] = "ÇÖZÜLMÜŞ TALEPLER";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "MÜŞTERİNİN TALEPLERİ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container">
     <div class="row mt-3 mb-3">
         <div class="col-12 text-center">
-            <h1 class="display-4">@ViewData["Title"]</h1>
+            <h1 class="display-4"> @ViewBag.CustomerName @ViewData["Title"]</h1>
         </div>
     </div>
 
@@ -20,28 +20,24 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Müşteri</th>
                                 <th>Talep Tarihi</th>
                                 <th>Talep</th>
                                 <th>Talep Türü</th>
                                 <th>Durum</th>
                                 <th>Müşteri Temsilcisi</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.CustomerName</td>
                                     <td>@item.CreateDate.ToString("dd MMMM yyyy")</td>
                                     <td>@item.Description</td>
                                     <td>@item.RequestTypeName</td>
                                     <td>@item.StatusName</td>
                                     <td>@item.CustomerRepName</td>
-                                   @* <td>
-                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" asp-route-requestId="@item.RequestId" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i> Talebi Al</a>
-                                    </td>*@
+
                                 </tr>
                             }
                         </tbody>
@@ -51,3 +47,4 @@
         </div>
     </div>
 </div>
+

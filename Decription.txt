@@ -60,5 +60,41 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
 13.Talep Detaylarý sayfasýndan "Talep Görüþme" butonuna týklayýnca -> Talep Görüþme sayfasý açýlýr
    Müþteri Temsilcisi görüþmenin notlarýný alýp Kaydet butonua týklayýnca ve Call tablosuna kaydedilir
 
+
+   ********************************************************************************************
+                                        #### Refactoring 1 ####
+ Veritabaný baðlantýsýný dinamik hale getirildi.Veritabaný deðiþirse sadece ConnectionString'i deðiþtirmiþ olucaz
+ 
+ CallCenterDbContext.cs classýnda OnConfiguring yazmak yerine appsettings.json içine ConnectionString yazýldý.
+ ServiceExtentions.cs classýnda AddDbContext servisi eklendi.
+ program.cs de bu ServiceExtentions class tanýtýlýken parametre de eklenir
+ CallCenterDbContext.cs clasýna parametreli constructor eklendi
+
+                                        #### Refactoring 2 ####
+ AddSingleton yerine AddScoped kullanýldý.
+ Her istekte iþlemler deðiþtiði, veritabaný güncelelndiði için bu yaklaþým doðru deðil.Bu yüzden AddScoped kullanýlýr.
+
+ AddSingleton : 1 kez oluþur Ram'e kaydeder ve hep onu kullanýr.//Bütün requetlerde ayný instance'ý kullanýr 
+ AddScoped    : Her istekte 1 nesne üretir.//Gelen her ayný Requestte ayný instance'ý kullanýr. 
+                Farklý Requestlerde yeni bir instance oluþturup kullanýr.
+ AddTransient : Her kullanýmda yeni nesne üretir.Ayný Requestte olsa yeni instance oluþturup kullanýr
+
+                                        #### Refactoring 3 ####
+ DataAccess kýsmýnda her seferinde using içinde context (veritabaný nesnesi) üretmek yerine constructor üzerinden Dependency Injection ile nesneyi ürettiriz.LooseCouple ile baðýmlýlýðýný azaltmýþ oluruz.
+
+                                        #### Refactoring 4 ####
+ Generic tarafta EfEntityRepositoryBase.cs clasýnda  .SaveChanges() metotu oluþturuldu. Böylece Add,Update gibi iþlemlerin içinde database e kaydetmek yerine bütün iþlemler bittiðinde biz istediðimizde database e kaydetmiþ oluruz.
+
+                                        #### Refactoring 5 ####
+ Müþteri Temsilcisi sayfasýna;
+   Dropboxýn içine "Deðerlendirilen Talepler" ve "Yeni Talepler" seçeneðide eklendi.
+   Müþteri Temsilcisinin sadece kendi çözdüðü talepleri listeleyebilmesi için "Çözdüðüm Talepler" butonu eklendi.
+
+                                        #### Refactoring 6 ####
+ Admin -> Raporlarý görecek kiþi ve MüþteriTemsilcilerini ayarlayan kiþi
+ Layoutu farklý oluþturuldu -> _AdminLayout.cshtml Yönetim Paneli sayfasý yapýldý
+
+
+
   
 

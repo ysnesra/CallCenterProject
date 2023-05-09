@@ -1,7 +1,7 @@
-﻿@model List<Entities.DTOs.RequestCompletedListDto>
+﻿@model List<Entities.DTOs.CustomerRepRequestCompletedListDto>
 
 @{
-    ViewData["Title"] = "ÇÖZÜLMÜŞ TALEPLER";
+    ViewData["Title"] = "MÜŞTERİ TEMSİLCİSİNİN ÇÖZDÜĞÜ TALEPLER";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -39,9 +39,7 @@
                                     <td>@item.RequestTypeName</td>
                                     <td>@item.StatusName</td>
                                     <td>@item.CustomerRepName</td>
-                                   @* <td>
-                                        <a asp-action="RequestCheckByCustomerRep" asp-controller="Request" asp-route-requestId="@item.RequestId" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i> Talebi Al</a>
-                                    </td>*@
+                                   
                                 </tr>
                             }
                         </tbody>

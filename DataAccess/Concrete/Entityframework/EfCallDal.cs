@@ -14,30 +14,35 @@ namespace DataAccess.Concrete.Entityframework
 {
     public class EfCallDal : EfEntityRepositoryBase<Call, CallCenterDbContext>, ICallDal
     {
-        //Müşteri Temsilcisi Görüşme Form Ekranından Ekleme
-        public void AddRequestCall(CallDto formdata,string emailForClaim)
+        private readonly CallCenterDbContext _context;
+
+        public EfCallDal(CallCenterDbContext context) : base(context)
         {
-            using (CallCenterDbContext context = new CallCenterDbContext())
+            _context  = context;
+        }
+
+        //Müşteri Temsilcisi Görüşme Form Ekranından Ekleme
+        public void AddRequestCall(CallDto callModel,string emailForClaim)
+        {          
+            var customerRepId = _context.CustomerReps.First(x => x.Email == emailForClaim).CustomerRepId;
+
+            Call call = new Call
             {
-                var customerRepId = context.CustomerReps.First(x => x.Email == emailForClaim).CustomerRepId;
-                
-                Call call = new Call
-                {
-                    CallDate = formdata.CallDate,
-                    CallTime = formdata.CallTime,
-                    CallNote = formdata.CallNote,
-                    RequestId = formdata.RequestId,
-                    CustomerId = formdata.CustomerId,
-                    CustomerRepId = customerRepId,
-                };
-                context.Calls.Add(call);
-                context.SaveChanges();
+                CallDate = callModel.CallDate,
+                CallTime = callModel.CallTime,
+                CallNote = callModel.CallNote,
+                RequestId = callModel.RequestId,
+                CustomerId = callModel.CustomerId,
+                CustomerRepId = customerRepId,
+            };
+            _context.Calls.Add(call);
+                       
+        }
 
-
-                var requestUpdated = context.Requests.Single(x => x.RequestId == call.RequestId);
-                requestUpdated.StatusId = 3;
-                context.SaveChanges();
-            }
+        public void UpdateRequestCall(int requestId)
+        {
+            var requestUpdated = _context.Requests.Single(x => x.RequestId == requestId);
+            requestUpdated.StatusId = 3;          
         }
     }
 }

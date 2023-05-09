@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
     public interface ICallDal : IEntityRepository<Call>
     {
         //Müşteri Temsilcisi Görüşme Form Ekranından Ekleme
-        void AddRequestCall(CallDto dto, string emailForClaim);
+        void AddRequestCall(CallDto callModel, string emailForClaim);
+        void UpdateRequestCall(int requestId);
     }
 }

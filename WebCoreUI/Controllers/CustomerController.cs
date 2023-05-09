@@ -135,5 +135,8 @@ namespace WebCoreUI.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);  //Cookieyi kapat
             return RedirectToAction(nameof(Login));
         }
+
+       
+       
     }
 }

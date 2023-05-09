@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Utilities.Security.JWT;
 using DataAccess.Abstract;
+using DataAccess.Concrete.Entityframework;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -17,7 +18,7 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
         private ICustomerDal _customerDal;
-        
+
         public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
@@ -26,7 +27,7 @@ namespace Business.Concrete
         public void AddCustomerDto(CustomerRegisterDto model)
         {
             //Bu mail adresi kullanılıyor mu
-            var dbCustomer=_customerDal.Get(x=>x.Email==model.Email);
+            var dbCustomer = _customerDal.Get(x => x.Email == model.Email);
             if (dbCustomer == null)
             {
                 Customer newCustomer = new Customer()
@@ -34,11 +35,12 @@ namespace Business.Concrete
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                    Phone=model.Phone,
+                    Phone = model.Phone,
                     Password = model.Password
                 };
 
                 _customerDal.Add(newCustomer);
+                _customerDal.SaveChanges();
             }
             else
             {
@@ -53,38 +55,19 @@ namespace Business.Concrete
             if (customerDb is null)
             {
                 throw new Exception("Bu Mail ve Parola ya ait kullanıcı bulunamadı");
-                return null;
             }
-            #region JwtToken
-            //Customer dbCustomer = new Customer()
-            //{
-            //    CustomerId = customerDb.CustomerId,
-            //    Email = customerDb.Email,
-            //    Password = customerDb.Password,
-            //    Role= customerDb.Role,
-            //};
-
-            //var result = CreateAccessToken(dbCustomer); 
-            #endregion
 
             CustomerLoginDto response = new()
             {
                 CustomerId = customerDb.CustomerId,
                 Email = customerDb.Email,
                 Password = customerDb.Password,
-                Role = customerDb.Role,              
-     
+                Role = customerDb.Role,
+
             };
 
             return (response);
         }
-
-        #region JwtToken
-        //public string CreateAccessToken(Customer customer)
-        //{
-        //    var accessToken = _tokenHelper.CreateToken(customer);
-        //    return accessToken.Token;
-        //} 
-        #endregion
+      
     }
 }

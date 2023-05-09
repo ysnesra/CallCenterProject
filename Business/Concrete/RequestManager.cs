@@ -33,7 +33,7 @@ namespace Business.Concrete
             return result;
 
         }
-    
+
         //Talep türünü liste şeklinde getiren method
         public List<SelectListItem> GetBySelectListRequestTypes()
         {
@@ -47,7 +47,7 @@ namespace Business.Concrete
 
         }
         // Talep ekleme
-        public void AddRequestCreateDto(RequestCreateDto model,int customerId)
+        public void AddRequestCreateDto(RequestCreateDto model, int customerId)
         {
             try
             {
@@ -58,15 +58,16 @@ namespace Business.Concrete
                     RequestTypeId = model.RequestTypeId,
                     StatusId = 1,                         //default:yeniTalep
                     CustomerId = customerId,
-                  
+
                 };
                 _requestDal.Add(newRequest);
+                _requestDal.SaveChanges();
             }
             catch (Exception)
             {
                 throw new Exception("Talep Ekleme işlemi başarısız");
             }
-           
+
         }
         //Müşteri Temsilcisi için Bütün Talepleri listeleme
         public List<RequestAllListDto> GetAllRequestList()
@@ -75,19 +76,40 @@ namespace Business.Concrete
             return result;
         }
         //Müşteri Temsilcisinin Talebin Detayına gittiği Method
-        public RequestAllListDto RequestDetailByCustomerRep(int requestId,string emailForClaim)
+        public RequestAllListDto RequestDetailByCustomerRep(int requestId, string emailForClaim)
         {
             int statusId = 2;
             var requestDto = _requestDal.GetRequestDetail(requestId, emailForClaim, statusId);
+            _requestDal.SaveChanges();
             return requestDto;
         }
 
-        //Çözülmüş Talepler
+        //Kapanan Talepler
         public List<RequestCompletedListDto> GetRequestCompletedList()
         {
             var result = _requestDal.GetRequestCompletedListDto();
             return result;
         }
 
+        //Yeni açılan Talepler
+        public List<RequestNewListDto> GetRequestNewList()
+        {
+            var result = _requestDal.GetRequestNewListDto();
+            return result;
+        }
+
+        //Değerlendirmede olan Talepler
+        public List<RequestContinueListDto> GetRequestContinueList()
+        {
+            var result = _requestDal.GetRequestContinueListDto();
+            return result;
+        }
+
+        //Müşteri Temsilcisinin çözdüğü Taleplerin Listesi
+        public List<CustomerRepRequestCompletedListDto> GetCustomerRepRequestCompletedList(string emailForClaim)
+        {
+            var result = _requestDal.GetCustomerRepRequestCompletedListDto(emailForClaim);
+            return result;
+        }
     }
 }
