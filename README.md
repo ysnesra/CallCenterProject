@@ -42,3 +42,35 @@ Talebin durumu “Talep çözüldü” olarak değişir ve “Kapanan Talepler�
  
 ![database](https://user-images.githubusercontent.com/104023688/233322293-c7206154-7405-4b51-bf67-2a6f5a1a3cf6.jpg)
 
+
+       **Refactoring 1** 
+ Veritabanı bağlantısını dinamik hale getirildi.Veritabanı değişirse sadece ConnectionString'i değiştirmiş olucaz.
+ CallCenterDbContext.cs classında OnConfiguring yazmak yerine appsettings.json içine ConnectionString yazıldı.
+ ServiceExtentions.cs classında AddDbContext servisi eklendi.
+ program.cs de bu ServiceExtentions class tanıtılıken parametre de eklenir
+ CallCenterDbContext.cs clasına parametreli constructor eklendi
+
+        **Refactoring 2**
+ AddSingleton yerine AddScoped kullanıldı.
+ Her istekte işlemler değiştiği, veritabanı güncelelndiği için bu yaklaşım doğru değil.Bu yüzden AddScoped kullanılır.
+ AddSingleton : 1 kez oluşur Ram'e kaydeder ve hep onu kullanır.//Bütün requetlerde aynı instance'ı kullanır 
+ AddScoped    : Her istekte 1 nesne üretir.//Gelen her aynı Requestte aynı instance'ı kullanır. 
+                Farklı Requestlerde yeni bir instance oluşturup kullanır.
+ AddTransient : Her kullanımda yeni nesne üretir.Aynı Requestte olsa yeni instance oluşturup kullanır
+
+       **Refactoring 3**
+ DataAccess kısmında her seferinde using içinde context (veritabanı nesnesi) üretmek yerine constructor üzerinden Dependency Injection ile nesneyi ürettiriz.LooseCouple ile bağımlılığını azaltmış oluruz.
+ 
+        **Refactoring 4** 
+ Generic tarafta EfEntityRepositoryBase.cs clasında  .SaveChanges() metotu oluşturuldu. Böylece Add,Update gibi işlemlerin içinde database e kaydetmek yerine bütün işlemler bittiğinde biz istediğimizde database e kaydetmiş oluruz.
+
+       **Refactoring 5** 
+ Müşteri Temsilcisi sayfasına;
+   Dropboxın içine "Değerlendirilen Talepler" ve "Yeni Talepler" seçeneğide eklendi.
+   Müşteri Temsilcisinin sadece kendi çözdüğü talepleri listeleyebilmesi için "Çözdüğüm Talepler" butonu eklendi.
+
+       **Refactoring 6** 
+ Admin -> Raporları görecek kişi ve MüşteriTemsilcilerini ayarlayan kişi
+ Layoutu farklı oluşturuldu -> _AdminLayout.cshtml Yönetim Paneli sayfası yapıldı
+
+
