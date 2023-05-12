@@ -93,6 +93,13 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
                                         #### Refactoring 6 ####
  Admin -> Raporlarý görecek kiþi ve MüþteriTemsilcilerini ayarlayan kiþi
  Layoutu farklý oluþturuldu -> _AdminLayout.cshtml Yönetim Paneli sayfasý yapýldý
+ Admin Role olarak verildi.
+ Admin Sayfasýnda;
+    *Talepleri görebiliyor //Müþteri Temsilcisi kýsmýnda yaptýðým yer link olarak verildi
+    *Bütün Müþterileri listeleyebiliyor.Her Müþterinin Taleplerine gidip Müþteriye ait Talepleri görebiliyor
+    *Bütün Müþteri Temsilcilerini listeleyebiliyor,Ekleyebiliyor,Güncelleyebiliyor ve Silebiliyor.
+    *MüþteriTemsilcisi eklerken ve Güncellerken Formu doldururken Validation kurallarý yazýldý.
+        //CustomerRepRegisterValidator, CustomerRepEditValidator
 
 
 

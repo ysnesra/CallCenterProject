@@ -209,7 +209,7 @@ namespace DataAccess.Concrete.Entityframework
             return result;
         }
 
-
+        //Sadece Kapanan talepleri Listeleme
         public List<CustomerRepRequestCompletedListDto> GetCustomerRepRequestCompletedListDto(string emailForClaim)
         {
             var customerRepId = _context.CustomerReps.First(x => x.Email == emailForClaim).CustomerRepId;

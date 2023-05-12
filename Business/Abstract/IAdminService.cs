@@ -18,6 +18,23 @@ namespace Business.Abstract
         //Müşterinin Adını dönderen metot
         string GetByIdCustomerName(int customerId);
         Task<string> GetByIdCustomerNameAsync(int customerId);
+
+        //Admin Tarafta Bütün Müşterileri Temsilcilerini listeleme 
+        List<CustomerRepAllListDto> GetAllCustomerRepList();
+
+        //Müşteri Temsilcisi Ekleme
+        void AddCustomerRepDto(CustomerRepRegisterDto model);
+
+        //Müşteri Temsilcisi Güncelleme formunu CustomerId ye göre dolu getirme
+        CustomerRepEditDto GetCustomerRepByCustomerId(int customerId);
+
+        //Müşteri Temsilcisi Güncelleme              
+        void EditCustomerRepDto(CustomerRepEditDto model);
+
+        //Müşteri Temsilcisi Silme
+        void DeleteCustomerRepDto(int customerId);
+
+
     }
 }
 

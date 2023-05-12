@@ -1,7 +1,7 @@
-﻿@model List<Entities.DTOs.CustomerAllListDto>
+﻿@model List<Entities.DTOs.CustomerRepAllListDto>
 
 @{
-    ViewData["Title"] = "BÜTÜN MÜŞTERİLER";
+    ViewData["Title"] = "BÜTÜN MÜŞTERİ TEMSİLCİLERİ";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -12,6 +12,8 @@
         </div>
     </div>
 
+    <a asp-action="CreateCustomerRep" asp-controller="Admin" class="btn btn-danger">Yeni Müşteri Temsilcisi</a>
+
 
     <div class="row">
         <div class="col-12">
@@ -20,13 +22,15 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Müşteri Ad</th>
+                                <th>Müşteri Temsilcisi Ad</th>
                                 <th>Soyad</th>
                                 <th>Mail</th>
                                 <th>Parola</th>
                                 <th>Telefon</th>
                                 <th>Rolü</th>
-                                <th>  </th>
+                                <th> </th>
+                                <th> </th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -39,9 +43,11 @@
                                     <td>@item.Password</td>
                                     <td>@item.Phone</td>
                                     <td>@item.Role</td>
-                                    <td>
-                                        <a asp-action="GetRequestListByCustomerId" asp-controller="Admin" asp-route-customerId="@item.CustomerId" class="btn btn-primary"><i class="fa-regular fa-file-lines"></i> Talepleri</a>
-                                    </td>
+
+                                    <td><a asp-action="EditCustomerRep" asp-controller="Admin" asp-route-customerId="@item.CustomerId" asp-route-customerRepId="@item.CustomerRepId" class="btn btn-warning">Güncelle</a></td>
+                                    <td><a asp-action="DeleteCustomerRep" asp-controller="Admin" asp-route-customerId="@item.CustomerId" asp-route-customerRepId="@item.CustomerRepId" class="btn btn-success">Sil</a></td>
+
+                                    @*href="/Admin/EditCustomerRep/@item.CustomerId/@item.CustomerRepId"*@
                                 </tr>
                             }
                         </tbody>
