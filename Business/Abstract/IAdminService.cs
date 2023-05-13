@@ -34,6 +34,9 @@ namespace Business.Abstract
         //Müşteri Temsilcisi Silme
         void DeleteCustomerRepDto(int customerId);
 
+        //Müşteri Temsilcisi Raporları
+        List<ReportDto> GetReportList();
+
 
     }
 }

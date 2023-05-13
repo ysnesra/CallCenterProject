@@ -17,12 +17,14 @@ namespace Business.Concrete
         ICustomerDal _customerDal;
         IRequestDal _requestDal;
         ICustomerRepDal _customerRepDal;
+        ICallDal _callDal;
 
-        public AdminManager(ICustomerDal customerDal, IRequestDal requestDal, ICustomerRepDal customerRepDal)
+        public AdminManager(ICustomerDal customerDal, IRequestDal requestDal, ICustomerRepDal customerRepDal, ICallDal callDal)
         {
             _customerDal = customerDal;
             _requestDal = requestDal;
             _customerRepDal = customerRepDal;
+            _callDal = callDal;
         }
 
         //Admin Tarafta Bütün müşterileri listeleme 
@@ -132,8 +134,8 @@ namespace Business.Concrete
         public CustomerRepEditDto GetCustomerRepByCustomerId(int customerId)
         {
             //Böyle bir müşteri temsilcisi sistemde var mı 
-            var existCustomer = _customerDal.Get(x => x.CustomerId ==customerId && x.Role == "customerRep");
-            var dbCustomerRepId=_customerRepDal.Get(x=>x.Email== existCustomer.Email).CustomerRepId;
+            var existCustomer = _customerDal.Get(x => x.CustomerId == customerId && x.Role == "customerRep");
+            var dbCustomerRepId = _customerRepDal.Get(x => x.Email == existCustomer.Email).CustomerRepId;
             if (existCustomer is null)
             {
                 throw new Exception("Müşteri Temsilcisi bulunmamaktadır");
@@ -142,10 +144,10 @@ namespace Business.Concrete
             {
                 CustomerId = existCustomer.CustomerId,
                 FirstName = existCustomer.FirstName,
-                LastName= existCustomer.LastName,
-                Email= existCustomer.Email,               
+                LastName = existCustomer.LastName,
+                Email = existCustomer.Email,
                 Phone = existCustomer.Phone,
-                CustomerRepId= dbCustomerRepId
+                CustomerRepId = dbCustomerRepId
             };
             return response;
         }
@@ -153,16 +155,16 @@ namespace Business.Concrete
         {
             //Böyle bir müşteri temsilcisi sistemde var mı 
             Customer existCustomer = _customerDal.Get(x => x.CustomerId == model.CustomerId && x.Role == "customerRep");
-            CustomerRep existCustomerRep = _customerRepDal.Get(x => x.CustomerRepId==model.CustomerRepId);
-            if (existCustomer ==null && existCustomerRep==null)
+            CustomerRep existCustomerRep = _customerRepDal.Get(x => x.CustomerRepId == model.CustomerRepId);
+            if (existCustomer == null && existCustomerRep == null)
             {
                 throw new Exception("Müşteri Temsilcisi bulunmamaktadır");
             }
-            
+
             existCustomer.CustomerId = model.CustomerId;
             existCustomer.FirstName = model.FirstName;
             existCustomer.LastName = model.LastName;
-            existCustomer.Email = model.Email;            
+            existCustomer.Email = model.Email;
             existCustomer.Password = model.Password;
             existCustomer.Phone = model.Phone;
             existCustomer.Role = "customerRep";
@@ -170,7 +172,7 @@ namespace Business.Concrete
             _customerDal.Update(existCustomer);
             _customerDal.SaveChanges();
 
-           
+
             existCustomerRep.CustomerRepId = model.CustomerRepId;
             existCustomerRep.FirstName = model.FirstName;
             existCustomerRep.LastName = model.LastName;
@@ -180,7 +182,7 @@ namespace Business.Concrete
 
             _customerRepDal.Update(existCustomerRep);
             _customerRepDal.SaveChanges();
-            
+
         }
 
         public void DeleteCustomerRepDto(int customerId)
@@ -195,8 +197,52 @@ namespace Business.Concrete
 
             _customerDal.Delete(existCustomer);
             _customerDal.SaveChanges();
-            _customerRepDal.Delete(dbCustomerRep);          
+            _customerRepDal.Delete(dbCustomerRep);
             _customerRepDal.SaveChanges();
+        }
+
+        //Müşteri Temsilcisi Raporları
+        public List<ReportDto> GetReportList()
+        {
+            //Öncelikle Tüm kapanan talepler listelenip onun üzerinden CustomerRepId ye göre gruplanır 
+            //ToDictionary() ile her bir müşteri temsilcisinin kapattığı talep sayısını hesaplanır. [1,13] [2,2]
+            List<Request> completedRequestDb = _requestDal.GetAll(x => x.StatusId == 3);
+            var completedRequestByCustomerRep = completedRequestDb.GroupBy(x => x.CustomerRepId)
+                                                                 .ToDictionary(g => g.Key, g => g.Count());
+
+            var callTimeByCustomerRep = _callDal.GetAll().GroupBy(x => x.CustomerRepId)
+                                                      .ToDictionary(g => g.Key, g => g.Sum(x => x.CallTime));
+
+            //Toplam görüşme süresi ve Toplam Kapanan Talep Sayısı
+            var allCallTimeTotal = _callDal.GetAll().Sum(x => x.CallTime);  
+            float allCompletedRequestCount = completedRequestDb.Count;
+
+            List<ReportDto> response = _customerRepDal.GetAll().Select(x => new ReportDto()
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.Email,
+                CompletedRequestCount = completedRequestByCustomerRep.ContainsKey(x.CustomerRepId)
+                                            ? completedRequestByCustomerRep[x.CustomerRepId]    // Keyi [1] olanın değerin Countını getir 
+                                            : 0,
+
+                CallTimeTotal = callTimeByCustomerRep.ContainsKey(x.CustomerRepId)
+                                            ? callTimeByCustomerRep[x.CustomerRepId]    // Keyi [1] olanın değerin Toplam süresini getir 
+                                            : 0,
+
+                AllCallTimeTotal = allCallTimeTotal,
+                AllCompletedRequestCount = allCompletedRequestCount,
+
+                AverageCallTimeTotal= callTimeByCustomerRep.ContainsKey(x.CustomerRepId)
+                                            ? callTimeByCustomerRep[x.CustomerRepId] / allCallTimeTotal * 100  
+                                            : 0,
+
+                AverageCompletedRequestCount = completedRequestByCustomerRep.ContainsKey(x.CustomerRepId)
+                                            ? completedRequestByCustomerRep[x.CustomerRepId] / allCompletedRequestCount * 100   
+                                            : 0 ,    
+            }).ToList();
+           
+            return response;
         }
 
         #region BusinessRules

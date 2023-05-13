@@ -1,0 +1,81 @@
+﻿@model List<Entities.DTOs.ReportDto>
+
+@{
+    ViewData["Title"] = "MÜŞTERİ TEMSİLCİSİ RAPORLARI";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <h1 class="display-4">@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> Ad</th>
+                                <th>Soyad</th>
+                                <th>Mail</th>
+                                <th>Çözülen Talep Sayısı</th>
+                                <th>Toplam Cevap Süresi(dk cinsinden)</th>
+                                <th>Toplam Çözülen Talep Sayısı </th>
+                                <th>Talebin Toplam Cevaplanma Süresi </th>
+                                <th>Ortalama Çözülen Talep Sayısı </th>
+                                <th>Talebin Ortalama Cevaplanma Süresi </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.CompletedRequestCount</td>
+                                    <td>@item.CallTimeTotal</td>
+                                    <td>@item.AllCompletedRequestCount</td>
+                                    <td>@item.AllCallTimeTotal</td>
+                                    <td>@item.AverageCompletedRequestCount</td>
+                                    <td>@item.AverageCallTimeTotal</td>
+
+                                </tr>                            
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="col-6">
+                            <label> Toplam Çözülen Talep Sayısı : </label>
+                          
+
+                        </div>
+                        <div class="col-6">
+                            <label> Talebin Toplam Cevaplanma Süresi : dakika </label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

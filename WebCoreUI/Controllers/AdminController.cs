@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace WebCoreUI.Controllers
 {
@@ -108,10 +109,10 @@ namespace WebCoreUI.Controllers
             return RedirectToAction(nameof(GetAllCustomerRep));
         }
 
-
+        //Müşteri Temsilcisi Rapor Ekranı
         public IActionResult GetReport()
-        {
-            return View();
+        {        
+            return View(_adminService.GetReportList());
         }
     }
 }
