@@ -18,8 +18,8 @@ namespace WebCoreUI.Controllers
         public AdminController(IAdminService adminService)
         {
             _adminService = adminService;
-        }  
-        
+        }
+
         // AdminLayout.cshtml      
         [HttpGet]
         public IActionResult AdminIndex()
@@ -38,7 +38,7 @@ namespace WebCoreUI.Controllers
         //Admin tarafta Müşterinin Talepleri
         [HttpGet]
         public IActionResult GetRequestListByCustomerId(int customerId)
-        {            
+        {
             ViewBag.CustomerName = _adminService.GetByIdCustomerName(customerId);
             var response = _adminService.GetRequestsByCustomerId(customerId);
             return View(response);
@@ -103,6 +103,7 @@ namespace WebCoreUI.Controllers
             return RedirectToAction(nameof(GetAllCustomerRep));
         }
 
+        [HttpGet]
         public IActionResult DeleteCustomerRep(int customerId)
         {
             _adminService.DeleteCustomerRepDto(customerId);
@@ -110,9 +111,31 @@ namespace WebCoreUI.Controllers
         }
 
         //Müşteri Temsilcisi Rapor Ekranı
+        [HttpGet]
         public IActionResult GetReport()
-        {        
+        {
+            ViewBag.AllCompletedRequest = _adminService.GetReportList()[0].AllCompletedRequestCount;
+            ViewBag.AllCallTime = _adminService.GetReportList()[0].AllCallTimeTotal;
+
             return View(_adminService.GetReportList());
         }
+
+        //Müşteri Temsilcisi Belli Tarih aralığındaki Rapor Ekranı
+        public IActionResult GetReportByDate()
+        {
+            return View(new List<ReportByDateDto>());
+        }
+
+        //Müşteri Temsilcisi Belli Tarih aralığındaki Rapor Ekranı
+        [HttpPost]
+        public IActionResult GetReportByDate(DateTime startDate, DateTime endDate)
+        {
+            ViewBag.StartDate = startDate;  
+            ViewBag.EndDate = endDate;  
+            var reportList = _adminService.GetByDateReportList(startDate, endDate);
+            return View(reportList);
+        }
+
+      
     }
 }

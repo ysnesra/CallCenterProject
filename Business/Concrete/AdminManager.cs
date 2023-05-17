@@ -245,6 +245,16 @@ namespace Business.Concrete
             return response;
         }
 
+        //Tarihe Göre Müşteri Temsilcisi Raporları
+        public List<ReportByDateDto> GetByDateReportList(DateTime startDate, DateTime endDate)
+        {
+            //CustomerRep ile Request Tablosunu Joinlemek için GetAllWithRequest metotu oluşturuldu(EfCustomerRep'de)
+            List<ReportByDateDto> response = _customerRepDal.GetAllWithRequest(startDate,endDate);
+           
+            return response;
+        }
+
+
         #region BusinessRules
 
         /// İş kuralları parçacığı 

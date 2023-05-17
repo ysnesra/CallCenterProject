@@ -37,7 +37,8 @@ namespace Business.Abstract
         //Müşteri Temsilcisi Raporları
         List<ReportDto> GetReportList();
 
-
+        //Tarihe Göre Müşteri Temsilcisi Raporları
+        List<ReportByDateDto> GetByDateReportList(DateTime startDate, DateTime endDate);
     }
 }
 

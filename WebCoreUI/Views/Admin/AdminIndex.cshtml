@@ -50,9 +50,21 @@
                 </ul>
             </li>
 
-            <li class="nav-item active">
-                <a class="nav-link text-dark" asp-controller="Admin" asp-action="GetReport"><i class="fa-regular fa-notebook"></i> Raporlar</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Raporlar
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item active">
+                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="GetReport"><i class="fa-regular fa-notebook"></i> Raporlar</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="GetReportByDate"><i class="fa-regular fa-notebook"></i>Tarih Aralıklı Raporlar</a>
+                    </li>
+                </ul>
             </li>
+
+           
 
         </ul>
     </div>

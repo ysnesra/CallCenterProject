@@ -1,4 +1,5 @@
-﻿@model List<Entities.DTOs.ReportDto>
+﻿@using Entities.DTOs
+@model List<Entities.DTOs.ReportByDateDto>
 
 @{
     ViewData["Title"] = "MÜŞTERİ TEMSİLCİLERİ RAPORLARI";
@@ -12,7 +13,34 @@
         </div>
     </div>
 
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Tarih Aralığı Seç</h5>
+            <form asp-action="GetReportByDate" asp-controller="Admin" data-val="true" method="post">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="StartDate">Başlangıç Tarihi</label>                     
+                        <input name="StartDate" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="EndDate">Bitiş Tarihi</label>
+                        <input name="endDate" type="date" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12 text-end">
+                        <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-chart-line"></i>  Göster</button>
+                    </div>
+                </div>
 
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <span> @ViewBag.StartDate?.ToString("dd MMMM yyyy") - @ViewBag.EndDate?.ToString("dd MMMM yyyy")  Tarihleri arasındaki Rapor</span>
+    </div>
 
     <div class="row">
         <div class="col-12">
@@ -26,8 +54,8 @@
                                 <th>Mail</th>
                                 <th>Çözülen Talep Sayısı</th>
                                 <th>Toplam Cevaplanma Süresi(dk cinsinden)</th>
-                              @*  <th>Bütün Çözülen Taleplerin Sayısı </th>
-                                <th>Bütün Taleplerin Toplam Cevaplanma Süresi(dk cinsinden) </th>*@
+                                <th>Bütün Çözülen Taleplerin Sayısı </th>
+                                <th>Bütün Taleplerin Toplam Cevaplanma Süresi(dk cinsinden) </th>
                                 <th>Ortalama Çözülen Talep Sayısı % </th>
                                 <th>Ortalama Cevaplanma Süresi % </th>
 
@@ -42,12 +70,12 @@
                                     <td>@item.Email</td>
                                     <td>@item.CompletedRequestCount</td>
                                     <td>@item.CallTimeTotal</td>
-                                  @*  <td>@item.AllCompletedRequestCount</td>
-                                    <td>@item.AllCallTimeTotal</td>*@
+                                    <td>@item.AllCompletedRequestCount</td>
+                                    <td>@item.AllCallTimeTotal</td>
                                     <td>@item.AverageCompletedRequestCount</td>
                                     <td>@item.AverageCallTimeTotal</td>
 
-                                </tr>                            
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -56,26 +84,6 @@
         </div>
     </div>
 
-   
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="col-6">
-                            <label> Toplam Çözülen Talep Sayısı : @ViewBag.AllCompletedRequest </label>
-                          
-
-                        </div>
-                        <div class="col-6">
-                            <label> Talebin Toplam Cevaplanma Süresi : @ViewBag.AllCallTime dakika </label>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </div>
