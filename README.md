@@ -90,3 +90,9 @@ Raporlar Sayfası:
 Tarih Belirlenerek Hesaplanan Raporlar Sayfası:
 ![TarihliRaporlar](https://github.com/ysnesra/CallCenterProject/assets/104023688/baeeeddc-ea00-40cf-a1fd-a6acb6eadf09)
 
+       **Refactoring 7** 
+ Müşteriler Sayfasında; Müşteri Profil Sayfası yapıldı.2 farklı yol denendi.
+    1."Bilgilerim" sekmesine tıklayınca -> Müşteri kendi bilgilerini model üzerinden günceller.
+    2."Profilim" sekmesine tıklayınca -> Müşteri kendi bilgilerinden hangisini değiştirmek istiyorsa sadece onu değiştirir. Burada Model kullanmadan her biri için action oluşturularak yapıldı.Böylece tek bir değişiklik yapıldığında tüm değerler güncellenmemiş olur. 
+      Toastr.js kütüphanesi kullanıldı.Değişik yapıldığını müşteriye mesaj penceresi olarak bildirmemizi sağlar. 
+
