@@ -71,6 +71,22 @@ Talebin durumu “Talep çözüldü” olarak değişir ve “Kapanan Talepler�
 
        **Refactoring 6** 
  Admin -> Raporları görecek kişi ve MüşteriTemsilcilerini ayarlayan kişi
- Layoutu farklı oluşturuldu -> _AdminLayout.cshtml Yönetim Paneli sayfası yapıldı
+ Layoutu farklı oluşturuldu -> AdminLayout.cshtml Yönetim Paneli sayfası yapıldı
+ Admin Role olarak verildi.
+ Admin Sayfasında;
+    *Talepleri görebiliyor //Müşteri Temsilcisi kısmında yaptığım yer link olarak verildi
+    *Bütün Müşterileri listeleyebiliyor.Her Müşterinin Taleplerine gidip Müşteriye ait Talepleri görebiliyor
+    *Bütün Müşteri Temsilcilerini listeleyebiliyor,Ekleyebiliyor,Güncelleyebiliyor ve Silebiliyor.
+    *MüşteriTemsilcisi eklerken ve Güncellerken Formu doldururken Validation kuralları yazıldı.
+        //CustomerRepRegisterValidator, CustomerRepEditValidator
+    *Raporlar
+       -Raporlar Sayfası yapıldı. Müşteri Temsilcisinin ortalama kaç Talepe Cevap verdiği ve ortalama talep cevaplama süresi hesaplanır. 
+       -Tarihe göre Raporlar Sayfası yapıldı. Belirlenen Tarih aralığına göre Raporları getirecek şekilde ayarlandı. 
+        Örneğin Mayıs Ayı Raporlarını görmek için -> başlangıç ve bitiş tarihini seçip Göster dediğinde filtreli olarak Raporları görür.
+        
+Raporlar Sayfası:
+![Raporlar](https://github.com/ysnesra/CallCenterProject/assets/104023688/ff2fda74-642e-417e-b0e9-af73a930801a)
 
+Tarih Belirlenerek Hesaplanan Raporlar Sayfası:
+![TarihliRaporlar](https://github.com/ysnesra/CallCenterProject/assets/104023688/baeeeddc-ea00-40cf-a1fd-a6acb6eadf09)
 
