@@ -35,29 +35,31 @@ namespace DataAccess.Concrete.Entityframework
             //} 
             #endregion
 
+            //MüşteriTemsilcisi kaç talebe cevap vermiş
             var completedRequestByCustomerRep = _context.Requests
-                                                           .Include(x => x.Calls)
-                                                           .Where(x => x.StatusId == 3 &&
-                                                                  x.Calls.First().CallDate >= startDate && x.Calls.First().CallDate <= endDate).ToList()
-                                                           .GroupBy(x => x.CustomerRepId)
-                                                                 .ToDictionary(g => g.Key, g => g.Count());
+                                                        .Include(x => x.Calls)
+                                                        .Where(x => x.StatusId == 3 &&
+                                                                x.Calls.First().CallDate >= startDate && x.Calls.First().CallDate <= endDate).ToList()
+                                                        .GroupBy(x => x.CustomerRepId)
+                                                                .ToDictionary(g => g.Key, g => g.Count());
 
+            //MüşteriTemsişcisinin talepleri cevaplama süresi toplamı
             var callTimeByCustomerRep = _context.Calls
-                                                    .Include(x => x.Request)
-                                                    .Where(x => x.Request.StatusId == 3 &&
-                                                           x.CallDate >= startDate && x.CallDate <= endDate).ToList()
-                                                    .GroupBy(x => x.CustomerRepId)
-                                                             .ToDictionary(g => g.Key, g => g.Sum(x => x.CallTime));
+                                                .Include(x => x.Request)
+                                                .Where(x => x.Request.StatusId == 3 &&
+                                                        x.CallDate >= startDate && x.CallDate <= endDate).ToList()
+                                                .GroupBy(x => x.CustomerRepId)
+                                                            .ToDictionary(g => g.Key, g => g.Sum(x => x.CallTime));
 
             //Toplam görüşme süresi ve Toplam Kapanan Talep Sayısı
             var allCallTimeTotal = _context.Calls
-                                            .Where(x => x.CallDate >= startDate && x.CallDate <= endDate)
-                                            .Sum(x => x.CallTime);
+                                           .Where(x => x.CallDate >= startDate && x.CallDate <= endDate)
+                                           .Sum(x => x.CallTime);
 
             float allCompletedRequestCount = _context.Requests
-                                                       .Include(x => x.Calls)
-                                                       .Where(x => x.StatusId == 3 &&
-                                                              x.Calls.First().CallDate >= startDate && x.Calls.First().CallDate <= endDate).ToList().Count;
+                                                     .Include(x => x.Calls)
+                                                     .Where(x => x.StatusId == 3 &&
+                                                            x.Calls.First().CallDate >= startDate && x.Calls.First().CallDate <= endDate).ToList().Count;
 
             var result = _context.Calls
                                 .Include(x => x.CustomerRep)
@@ -76,10 +78,10 @@ namespace DataAccess.Concrete.Entityframework
                                     AllCallTimeTotal = allCallTimeTotal,
                                     AllCompletedRequestCount = allCompletedRequestCount,
 
-                                    AverageCallTimeTotal = callTimeByCustomerRep
-                                                .GetValueOrDefault(r.First().CustomerRepId, 0) / allCallTimeTotal * 100,
-                                    AverageCompletedRequestCount = completedRequestByCustomerRep
-                                                .GetValueOrDefault(r.First().CustomerRepId, 0) / allCompletedRequestCount * 100,
+                                    AverageCallTimeTotal = (callTimeByCustomerRep
+                                                .GetValueOrDefault(r.First().CustomerRepId, 0) / allCallTimeTotal * 100).ToString("0.00"),
+                                    AverageCompletedRequestCount = (completedRequestByCustomerRep
+                                                .GetValueOrDefault(r.First().CustomerRepId, 0) / allCompletedRequestCount * 100).ToString("0.00"),
 
                                     StartDate = startDate,
                                     EndDate = endDate

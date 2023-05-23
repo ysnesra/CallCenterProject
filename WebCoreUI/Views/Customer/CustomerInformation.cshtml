@@ -1,0 +1,80 @@
+﻿@model Entities.DTOs.CustomerInformationDto
+
+@{
+    ViewData["Title"] = "Müşteri Bilgileri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+
+
+<div class="row mt-4">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2>Profil Bilgilerim</h2>
+                        <hr />
+                        <p class="small">İsim, Mail, Parola, Telefon bilgilerinizi değiştirebilirsiniz.</p>
+                        <hr />
+
+                        <form data-val="true" method="post">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="FirstName" class="form-label">Ad</label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Adınız..." />
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="LastName" class="form-label">Soyad</label>
+                                <input asp-for="LastName" class="form-control" placeholder="Soyadınız..." />
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Email" class="form-label">Mail</label>
+                                <input asp-for="Email" class="form-control" placeholder="Mail..." />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Phone" class="form-label">TelNo</label>
+                                <input asp-for="Phone" class="form-control" placeholder="Tel..." />
+                                <span asp-validation-for="Phone" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Password" class="form-label">Parola</label>
+                                <input asp-for="Password" class="form-control" type="password" placeholder="P@ssW0rd!" />
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+                        
+                            <input type="hidden" asp-for="CustomerId" value="@Model.CustomerId" />
+
+                            <div class="form-group d-grid mb-3">
+                                <button type="submit" asp-route-customerId="@Model.CustomerId" class="btn btn-primary d-block"><i class="fa-solid fa-paper-plane me-2"></i>Güncelleeee</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

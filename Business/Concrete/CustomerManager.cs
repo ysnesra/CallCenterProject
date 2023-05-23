@@ -68,6 +68,101 @@ namespace Business.Concrete
 
             return (response);
         }
-      
+
+        //Müşterinin Bilgi formunu CustomerId ye göre dolu getirme
+        public CustomerInformationDto GetCustomerInformation(int customerId)
+        {
+            //Böyle bir müşteri temsilcisi sistemde var mı 
+            var existCustomer = _customerDal.Get(x => x.CustomerId == customerId);          
+            if (existCustomer is null)
+            {
+                throw new Exception("Müşteri bulunmamaktadır");
+            }
+            CustomerInformationDto response = new CustomerInformationDto()
+            {
+                CustomerId = existCustomer.CustomerId,
+                FirstName = existCustomer.FirstName,
+                LastName = existCustomer.LastName,
+                Email = existCustomer.Email,
+                Phone = existCustomer.Phone  
+            };
+            return response;
+        }
+
+        //Müşterinin Bilgileri Güncelleme
+        public void GetCustomerInformationDto(CustomerInformationDto model)
+        {
+            //Böyle bir müşteri sistemde var mı 
+            Customer existCustomer = _customerDal.Get(x => x.CustomerId == model.CustomerId);
+            
+            if (existCustomer == null)
+            {
+                throw new Exception("Müşteri bulunmamaktadır");
+            }
+
+            existCustomer.CustomerId = model.CustomerId;
+            existCustomer.FirstName = model.FirstName;
+            existCustomer.LastName = model.LastName;
+            existCustomer.Email = model.Email;
+            existCustomer.Password = model.Password;
+            existCustomer.Phone = model.Phone;
+            existCustomer.Role = "customer";
+
+            _customerDal.Update(existCustomer);
+            _customerDal.SaveChanges();
+        }
+
+        //Müşterinin AdSoyad Bilgilerini Güncelleme
+        public void GetProfileChangeFullName(string firstName,string lastName, int customerId)
+        {
+            Customer existCustomer=_customerDal.Get(x => x.CustomerId == customerId);
+            if(existCustomer == null)
+            {
+                throw new Exception("Müşteri bulunmamaktadır");
+            }
+            existCustomer.FirstName = firstName;
+            existCustomer.LastName = lastName;
+
+            _customerDal.SaveChanges();
+        }
+
+        //Müşterinin Telefon Bilgilerini Güncelleme
+        public void GetProfileChangePhone(string phone, int customerId)
+        {
+            Customer existCustomer = _customerDal.Get(x => x.CustomerId == customerId);
+            if (existCustomer == null)
+            {
+                throw new Exception("Müşteri bulunmamaktadır");
+            }
+            existCustomer.Phone = phone;
+
+            _customerDal.SaveChanges();
+        }
+
+        //Müşterinin Mail Bilgilerini Güncelleme
+        public void GetProfileChangeEmail(string email, int customerId)
+        {
+            Customer existCustomer = _customerDal.Get(x => x.CustomerId == customerId);
+            if (existCustomer == null)
+            {
+                throw new Exception("Müşteri bulunmamaktadır");
+            }
+            existCustomer.Email = email;
+
+            _customerDal.SaveChanges();
+        }
+
+        //Müşterinin Parola Bilgilerini Güncelleme
+        public void GetProfileChangePassword(string password, int customerId)
+        {
+            Customer existCustomer = _customerDal.Get(x => x.CustomerId == customerId);
+            if (existCustomer == null)
+            {
+                throw new Exception("Müşteri bulunmamaktadır");
+            }
+            existCustomer.Password = password;
+
+            _customerDal.SaveChanges();
+        }
     }
 }

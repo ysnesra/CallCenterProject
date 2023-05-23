@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using Entities.Concrete;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace WebCoreUI.Controllers
 {
@@ -136,7 +139,101 @@ namespace WebCoreUI.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-       
-       
+        //Müşterinin Bilgi formunu CustomerId ye göre dolu getirme
+        [HttpGet]
+        public IActionResult CustomerInformation()
+        {
+           //Claimdeki Id : 
+           int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+           CustomerInformationDto model = _customerService.GetCustomerInformation(customerId);
+           return View(model);
+        }
+
+        //Müşteri Bilgileri Güncelleme
+        [HttpPost]
+        public IActionResult CustomerInformation(CustomerInformationDto model)
+        {
+            _customerService.GetCustomerInformationDto(model);
+            return RedirectToAction(nameof(CustomerInformation));
+        }
+      
+        //Müşterinin Bilgi formunu CustomerId ye göre dolu getirme
+        [HttpGet]
+        public IActionResult CustomerInformationProfile()
+        {
+            ProfileInfoLoader();
+            return View();
+        }
+
+        private void ProfileInfoLoader()      //Açılışta değerleri dolu getiren metodumuz
+        {
+            //Claimdeki Id : 
+            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            CustomerInformationDto model = _customerService.GetCustomerInformation(customerId);
+            ViewData["FirstName"] = model.FirstName;
+            ViewData["LastName"] = model.LastName;
+            ViewData["Phone"] = model.Phone;
+            ViewData["Email"] = model.Email;
+            ViewData["Password"] = model.Password;         
+        }
+
+
+        //Müşteri AdıSoyadı Güncelleme
+        //Veriler model olmadan nasıl gelir? --Inputların (name="firstName") name içindeki ismini parametre olarak verebiliriz
+        [HttpPost]
+        public IActionResult ProfileChangeFullName([Required][MinLength(2)][StringLength(50)]string? firstName, [Required][StringLength(50)] string? lastName)
+        {
+            //Claimdeki Id : 
+            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));     
+            _customerService.GetProfileChangeFullName(firstName,lastName,customerId);
+
+            ViewData["fullNameResult"] = "AdSoyad bilginiz değişti";
+            ProfileInfoLoader();
+            return View(nameof(CustomerInformationProfile));
+        }
+
+        //Müşteri Telefon Güncelleme
+        [HttpPost]
+        public IActionResult ProfileChangePhone([Required] string? phone)
+        {
+            //Claimdeki Id : 
+            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            _customerService.GetProfileChangePhone(phone, customerId);
+
+            ViewData["phoneResult"] = "Telefonunuz değişti";
+            ProfileInfoLoader();
+            return View(nameof(CustomerInformationProfile));
+        }
+        
+        //Müşteri Telefon Güncelleme
+        [HttpPost]
+        public IActionResult ProfileChangeEmail([Required][EmailAddress] string? email)
+        {
+            //Claimdeki Id : 
+            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            _customerService.GetProfileChangeEmail(email, customerId);
+
+            ViewData["emailResult"] = "Mailiniz değişti";
+            ProfileInfoLoader();
+            return View(nameof(CustomerInformationProfile));
+        }
+
+        //Müşteri Parola Güncelleme
+        [HttpPost]
+        public IActionResult ProfileChangePassword([Required]
+             [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+             ,ErrorMessage ="Parolanız en az sekiz karakter, en az bir harf ve bir sayı içermelidir!")] string? password)
+        {
+            if (ModelState.IsValid)
+            {
+                //Claimdeki Id : 
+                int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                _customerService.GetProfileChangePassword(password, customerId);
+
+                ViewData["passwordResult"] = "Parolanız değişti";                    
+            }
+            ProfileInfoLoader();
+            return View(nameof(CustomerInformationProfile));
+        }
     }
 }

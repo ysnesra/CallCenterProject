@@ -100,8 +100,16 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
     *Bütün Müþteri Temsilcilerini listeleyebiliyor,Ekleyebiliyor,Güncelleyebiliyor ve Silebiliyor.
     *MüþteriTemsilcisi eklerken ve Güncellerken Formu doldururken Validation kurallarý yazýldý.
         //CustomerRepRegisterValidator, CustomerRepEditValidator
-
-
+    *Raporlar
+       -Raporlar Sayfasý yapýldý. Müþteri Temsilcisinin ortalama kaç Talepe Cevap verdiði ve ortalama talep cevaplama süresi hesaplanýr. 
+       -Tarihe göre Raporlar Sayfasý yapýldý. Belirlenen Tarih aralýðýna göre Raporlarý getirecek þekilde ayarlandý. 
+        Örneðin Mayýs Ayý Raporlarýný görmek için -> baþlangýç ve bitiþ tarihini seçip Göster dediðinde filtreli olarak Raporlarý görür.
+          
+                                        #### Refactoring 7 ####
+Müþteriler Sayfasýnda; Müþteri Profil Sayfasý yapýldý.2 farklý yol denendi.
+    1."Bilgilerim" sekmesine týklayýnca -> Müþteri kendi bilgilerini model üzerinden günceller.
+    2."Profilim" sekmesine týklayýnca -> Müþteri kendi bilgilerinden hangisini deðiþtirmek istiyorsa sadece onu deðiþtirir. Burada Model kullanmadan her biri için action oluþturularak yapýldý.Böylece tek bir deðiþiklik yapýldýðýnda tüm deðerler güncellenmemiþ olur. 
+      Toastr.js kütüphanesi kullanýldý.Deðiþik yapýldýðýný müþteriye mesaj penceresi olarak bildirmemizi saðlar.
 
   
 

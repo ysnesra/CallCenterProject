@@ -131,7 +131,9 @@ namespace WebCoreUI.Controllers
         public IActionResult GetReportByDate(DateTime startDate, DateTime endDate)
         {
             ViewBag.StartDate = startDate;  
-            ViewBag.EndDate = endDate;  
+            ViewBag.EndDate = endDate;
+            ViewBag.AllCompletedRequest = _adminService.GetByDateReportList(startDate,endDate)[0].AllCompletedRequestCount;
+            ViewBag.AllCallTime = _adminService.GetByDateReportList(startDate,endDate)[0].AllCallTimeTotal;
             var reportList = _adminService.GetByDateReportList(startDate, endDate);
             return View(reportList);
         }

@@ -90,6 +90,7 @@ namespace WebCoreUI.Controllers
         public IActionResult CustomerRepRequestCompletedList()
         {
             string emailForClaim = User.FindFirstValue("Email");
+            ViewBag.CustomerRepEmail=emailForClaim;
             var response = _requestService.GetCustomerRepRequestCompletedList(emailForClaim);
             return View(response);
         }

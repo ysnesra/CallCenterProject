@@ -1,0 +1,154 @@
+﻿@model Entities.DTOs.CustomerInformationDto
+
+@{
+    ViewData["Title"] = "Profili";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["FirstName"] @ViewData["LastName"] @ViewData["Title"]</h1>
+    </div>
+</div>
+
+
+
+<div class="row mt-4">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-lg-10">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2>Profil Bilgilerim</h2>
+                        <hr />
+                        <p class="small">İsim, Mail, Parola, Telefon bilgilerinizi değiştirebilirsiniz.</p>
+                        <hr />
+
+                        <form method="post" asp-action="ProfileChangeFullName">
+                           
+                            @*Model kullanmadan actiona gönderiyor*@
+                            <div class="row">
+                                <div class=" col-5">
+                                    <div class="form-group">
+                                        <label class="frm-label small">Ad</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="firstName" class="form-control" placeholder="Adınız..." value="@ViewData["FirstName"]" />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-5">
+                                    <div class="form-group">
+                                        <label class="frm-label small">Soyad</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="lastName" class="form-control" placeholder="Soyadınız..." value="@ViewData["LastName"]" />
+                                            
+                                        </div>
+                                    </div>     
+                                </div>
+                               <div class=" col-2">
+                                    <div class="form-group">
+                                        <br />  
+                                        <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form method="post" asp-action="ProfileChangePhone">
+                            <div class="form-group">
+                                <label class="frm-label small">Telefon</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="phone" class="form-control" placeholder="Tel..." value="@ViewData["Phone"]" />
+                                   
+                                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form method="post" asp-action="ProfileChangeEmail">
+                            <div class="form-group">
+                                <label class="frm-label small">Mail</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="email" class="form-control" placeholder="Mail..." value="@ViewData["Email"]" />
+                                    
+                                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form method="post" asp-action="ProfileChangePassword">
+                            <div class="form-group">
+                                <label class="frm-label small">Parola</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="password" class="form-control" placeholder="Parola..."  />                        
+                                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
+                                </div>
+                                @if (ViewData["result"] != null && ViewData["result"] == "Parolanız değişti")
+                                {
+                                    <span class="text-success small">Parolanız değişti</span>
+                                }
+                                                             
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@*script tagları içine Parola güncellendi mesajını toastr.js kullanarak verdik.*@
+@section Scripts{
+    @if (ViewData["fullNameResult"] != null && ViewData["fullNameResult"] == "AdSoyad bilginiz değişti")
+    {
+        <script>
+            toastr["success"]("AdSoyad bilginiz değiştirilmiştir", "AdSoyad bilginiz Değişti");
+        </script>
+    }
+    else
+    {
+        <script>
+            toastr["error"]("AdSoyad bilginiz değişmedi");
+        </script>
+    }
+    @if (ViewData["phoneResult"] != null && ViewData["phoneResult"] == "Telefonunuz değişti")
+    {
+        <script>
+            toastr["success"]("Telefonunuz değiştirilmiştir", "Telefonunuz Değişti");
+        </script>
+    }
+    else
+    {
+        <script>
+            toastr["error"]("Telefonunuz değişmedi");
+        </script>
+    }
+    @if (ViewData["emailResult"] != null && ViewData["emailResult"] == "Mailiniz değişti")
+    {
+        <script>
+            toastr["success"]("Mail adresiniz değiştirilmiştir", "Mail Adresi Değişti");
+        </script>
+    }
+    else
+    {
+        <script>
+            toastr["error"]("Mailiniz değişmedi");
+        </script>
+    }
+    @if (ViewData["passwordResult"] != null && ViewData["passwordResult"] == "Parolanız değişti")
+    {
+        <script>
+            toastr["success"]("Şifreniz değiştirilmiştir", "Şifre Değişti");
+        </script>
+    }
+    else{
+        <script>
+            toastr["error"]("Şifreniz en az sekiz karakter, en az bir harf ve bir sayı içermelidir!", "Şifreniz değişmedi");
+        </script>
+    }
+}
