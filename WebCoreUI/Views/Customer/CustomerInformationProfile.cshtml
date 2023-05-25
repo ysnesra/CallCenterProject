@@ -83,12 +83,7 @@
                                 <div class="input-group mb-3">
                                     <input type="text" name="password" class="form-control" placeholder="Parola..."  />                        
                                     <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
-                                </div>
-                                @if (ViewData["result"] != null && ViewData["result"] == "Parolanız değişti")
-                                {
-                                    <span class="text-success small">Parolanız değişti</span>
-                                }
-                                                             
+                                </div>                                                            
                             </div>
                         </form>
 
@@ -104,51 +99,58 @@
 
 @*script tagları içine Parola güncellendi mesajını toastr.js kullanarak verdik.*@
 @section Scripts{
-    @if (ViewData["fullNameResult"] != null && ViewData["fullNameResult"] == "AdSoyad bilginiz değişti")
+
+    @if (ViewData["fullNameResult"] != null && ViewData["fullNameResult"] == "fullNameResultChange")
     {
         <script>
-            toastr["success"]("AdSoyad bilginiz değiştirilmiştir", "AdSoyad bilginiz Değişti");
+            toastr["success"]("AdSoyad bilginiz değişti", "İşlem Başarılı");
         </script>
     }
-    else
+    else  if (ViewData["fullNameResult"] != null && ViewData["fullNameResult"] == "fullNameResultChangeFail")   
     {
         <script>
-            toastr["error"]("AdSoyad bilginiz değişmedi");
+            toastr["error"]("@ViewData["fullNameResultMessage"]", "UYARI");
         </script>
     }
-    @if (ViewData["phoneResult"] != null && ViewData["phoneResult"] == "Telefonunuz değişti")
+
+    @if (ViewData["phoneResult"] != null && ViewData["phoneResult"] == "PhoneChange")
     {
         <script>
-            toastr["success"]("Telefonunuz değiştirilmiştir", "Telefonunuz Değişti");
+            toastr["success"]("@ViewData["phoneResultMessage"]", "İşlem Başarılı");
         </script>
     }
-    else
+    else if (ViewData["phoneResult"] != null && ViewData["phoneResult"] == "PhoneChangeFail")
     {
         <script>
-            toastr["error"]("Telefonunuz değişmedi");
+            toastr["error"]("@ViewData["phoneResultMessage"]", "UYARI");
         </script>
     }
-    @if (ViewData["emailResult"] != null && ViewData["emailResult"] == "Mailiniz değişti")
+
+    @if (ViewData["emailResult"] != null && ViewData["emailResult"] == "EmailChange")
     {
         <script>
-            toastr["success"]("Mail adresiniz değiştirilmiştir", "Mail Adresi Değişti");
+            toastr["success"]("@ViewData["emailResultMessage"]", "İşlem Başarılı");
         </script>
     }
-    else
+    else if (ViewData["emailResult"] != null && ViewData["emailResult"] == "EmailChangeFail")
     {
         <script>
-            toastr["error"]("Mailiniz değişmedi");
+            toastr["error"]("@ViewData["emailResultMessage"]", "UYARI");
         </script>
     }
-    @if (ViewData["passwordResult"] != null && ViewData["passwordResult"] == "Parolanız değişti")
+
+    @if (ViewData["passwordResult"] != null && ViewData["passwordResult"] == "PasswordChange")
     {
         <script>
-            toastr["success"]("Şifreniz değiştirilmiştir", "Şifre Değişti");
+            toastr["success"]("@ViewData["passwordResultMessage"]", "İşlem Başarılı");
         </script>
     }
-    else{
+    else if (ViewData["passwordResult"] != null && ViewData["passwordResult"] == "PasswordChangeFail")
+    {
         <script>
-            toastr["error"]("Şifreniz en az sekiz karakter, en az bir harf ve bir sayı içermelidir!", "Şifreniz değişmedi");
+            toastr["error"]("@ViewData["passwordResultMessage"]", "UYARI");
         </script>
     }
+
+
 }

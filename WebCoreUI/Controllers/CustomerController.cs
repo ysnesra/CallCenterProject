@@ -33,7 +33,7 @@ namespace WebCoreUI.Controllers
         {
             return View();
         }
-        
+
         //ÜyeOl Ekranı formu
         [AllowAnonymous]
         public IActionResult Register()
@@ -99,7 +99,7 @@ namespace WebCoreUI.Controllers
         //} 
         #endregion
 
-        
+
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Login(CustomerLoginDto model)
@@ -143,10 +143,10 @@ namespace WebCoreUI.Controllers
         [HttpGet]
         public IActionResult CustomerInformation()
         {
-           //Claimdeki Id : 
-           int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-           CustomerInformationDto model = _customerService.GetCustomerInformation(customerId);
-           return View(model);
+            //Claimdeki Id : 
+            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            CustomerInformationDto model = _customerService.GetCustomerInformation(customerId);
+            return View(model);
         }
 
         //Müşteri Bilgileri Güncelleme
@@ -156,7 +156,7 @@ namespace WebCoreUI.Controllers
             _customerService.GetCustomerInformationDto(model);
             return RedirectToAction(nameof(CustomerInformation));
         }
-      
+
         //Müşterinin Bilgi formunu CustomerId ye göre dolu getirme
         [HttpGet]
         public IActionResult CustomerInformationProfile()
@@ -174,48 +174,105 @@ namespace WebCoreUI.Controllers
             ViewData["LastName"] = model.LastName;
             ViewData["Phone"] = model.Phone;
             ViewData["Email"] = model.Email;
-            ViewData["Password"] = model.Password;         
+            ViewData["Password"] = model.Password;
         }
 
 
         //Müşteri AdıSoyadı Güncelleme
         //Veriler model olmadan nasıl gelir? --Inputların (name="firstName") name içindeki ismini parametre olarak verebiliriz
         [HttpPost]
-        public IActionResult ProfileChangeFullName([Required][MinLength(2)][StringLength(50)]string? firstName, [Required][StringLength(50)] string? lastName)
+        public IActionResult ProfileChangeFullName([Required][MinLength(2)][StringLength(50)] string? firstName, [Required][StringLength(50)] string? lastName)
         {
-            //Claimdeki Id : 
-            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));     
-            _customerService.GetProfileChangeFullName(firstName,lastName,customerId);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //Claimdeki Id : 
+                    int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    _customerService.GetProfileChangeFullName(firstName, lastName, customerId);
 
-            ViewData["fullNameResult"] = "AdSoyad bilginiz değişti";
-            ProfileInfoLoader();
-            return View(nameof(CustomerInformationProfile));
+                    ViewData["fullNameResult"] = "fullNameResultChange";
+                    ProfileInfoLoader();
+                }
+                catch (Exception ex)
+                {
+                    ViewData["fullNameResult"] = "fullNameResultChangeFail";
+                    ViewData["fullNameResultMessage"] = ex.Message.ToString();
+                }
+
+                return View(nameof(CustomerInformationProfile));
+            }
+            else
+            {
+                ViewData["fullNameResult"] = "fullNameResultChangeFail";
+                ViewData["fullNameResultMessage"] = "Ad Alanı Boş";
+                return View(nameof(CustomerInformationProfile));
+            }
         }
 
         //Müşteri Telefon Güncelleme
         [HttpPost]
         public IActionResult ProfileChangePhone([Required] string? phone)
         {
-            //Claimdeki Id : 
-            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            _customerService.GetProfileChangePhone(phone, customerId);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //Claimdeki Id : 
+                    int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    _customerService.GetProfileChangePhone(phone, customerId);
 
-            ViewData["phoneResult"] = "Telefonunuz değişti";
-            ProfileInfoLoader();
-            return View(nameof(CustomerInformationProfile));
+                    ViewData["phoneResult"] = "PhoneChange";
+                    ViewData["phoneResultMessage"] = "Telefon numarası değişdi";
+                    ProfileInfoLoader();
+
+                }
+                catch
+                {
+                    ViewData["phoneResult"] = "PhoneChangeFail";
+                    ViewData["phoneResultMessage"] = "Telefon numarası değişmedi";
+                }
+                return View(nameof(CustomerInformationProfile));
+            }
+            else
+            {
+                ViewData["phoneResult"] = "PhoneChangeFail";
+                ViewData["phoneResultMessage"] = "Telefon numarası boş olamaz";
+                return View(nameof(CustomerInformationProfile));
+            }
         }
-        
-        //Müşteri Telefon Güncelleme
+
+        //Müşteri Mail Güncelleme
         [HttpPost]
         public IActionResult ProfileChangeEmail([Required][EmailAddress] string? email)
         {
-            //Claimdeki Id : 
-            int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            _customerService.GetProfileChangeEmail(email, customerId);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //Claimdeki Id : 
+                    int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    _customerService.GetProfileChangeEmail(email, customerId);
 
-            ViewData["emailResult"] = "Mailiniz değişti";
-            ProfileInfoLoader();
-            return View(nameof(CustomerInformationProfile));
+                    ViewData["emailResult"] = "EmailChange";
+                    ViewData["emailResultMessage"] = "Mail adresi değişdi";
+                    ProfileInfoLoader();
+
+                }
+                catch
+                {
+                    ViewData["emailResult"] = "EmailChangeFail";
+                    ViewData["emailResultMessage"] = "Telefon numarası değişmedi";
+
+                }
+                return View(nameof(CustomerInformationProfile));
+            }
+            else
+            {
+                ViewData["emailResult"] = "EmailChangeFail";
+                ViewData["emailResultMessage"] = "Telefon numarası alanı boş olamaz";
+                return View(nameof(CustomerInformationProfile));
+            }
         }
 
         //Müşteri Parola Güncelleme
@@ -226,14 +283,30 @@ namespace WebCoreUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Claimdeki Id : 
-                int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                _customerService.GetProfileChangePassword(password, customerId);
+                try
+                {
+                    //Claimdeki Id : 
+                    int customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    _customerService.GetProfileChangePassword(password, customerId);
 
-                ViewData["passwordResult"] = "Parolanız değişti";                    
+                    ViewData["passwordResult"] = "PasswordChange";
+                    ViewData["passwordResultMessage"] = "Parola değişti";
+                    ProfileInfoLoader();
+                }
+                catch 
+                {  
+                    ViewData["passwordResult"] = "PasswordChangeFail";
+                    ViewData["passwordResultMessage"] = "Parola değişmedi";
+                }
+                return View(nameof(CustomerInformationProfile));
             }
-            ProfileInfoLoader();
-            return View(nameof(CustomerInformationProfile));
+            else
+            {
+                ViewData["passwordResult"] = "PasswordChangeFail";
+                ViewData["passwordResultMessage"] = "Parola alanı boş olamaz";
+                return View(nameof(CustomerInformationProfile));
+            }
+           
         }
     }
 }

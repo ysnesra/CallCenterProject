@@ -40,7 +40,13 @@ namespace WebCoreUI.Controllers
             {           
                 string emailForClaim = User.FindFirstValue("Email");
 
-                _callService.AddCallDto(model, emailForClaim);               
+                _callService.AddCallDto(model, emailForClaim);        
+                
+
+                //mÜŞTERİ mail göndrme //Helper RabbitMQ
+
+
+
                 return Redirect("/CustomerRep/ProfileCustRep");
 
             }
