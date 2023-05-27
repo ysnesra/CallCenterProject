@@ -100,13 +100,13 @@ Müşteriler Sayfasında; Müşteri Profil Sayfası yapıldı.2 farklı yol dene
            **Refactoring 8** 
 Müşteri Temsilcisi talebi çözüp Call tablosuna kaydettiğinde -> Müşteriye otomatik olarak bilgilendirme Mailinin gitmesi 
  
- -  1. Core -> Helpers -> EmailToInformation isminde extentions metotu oluşturuldu.
+ -   Core -> Helpers -> EmailToInformation isminde extentions metotu oluşturuldu.
    Müşteriye gönderilecek olan bilgilendirme e-postasının bir şablonunu buraya yazıldı.
- -  2. Hotmail hesabı üzerinden mail gönderimi yapıldı.SMTP serverının ismi hotmail ayarlar kısmından bakılıp yazıldı.
+ -   Hotmail hesabı üzerinden mail gönderimi yapıldı.SMTP serverının ismi hotmail ayarlar kısmından bakılıp yazıldı.
    username kısmına hotmail adresi, password kısmına da mailin şifresi yazıldı.
    alıcımail(recipientEmail) adreside callControllerdan geliyor.Müşteriye maili send ediyor.
  
- Otomatik Gönderilen Mail
+ Otomatik Gönderilen Mail:
    ![mailgönderme](https://github.com/ysnesra/CallCenterProject/assets/104023688/7a4b418f-4834-40b3-b00e-9dd8d5658557)
 
 
