@@ -44,5 +44,11 @@ namespace DataAccess.Concrete.Entityframework
             var requestUpdated = _context.Requests.Single(x => x.RequestId == requestId);
             requestUpdated.StatusId = 3;          
         }
+
+        public string CallwithCustomer(int customerId)
+        {
+           string email= _context.Customers.Include(x=>x.Calls).Single(x=>x.CustomerId == customerId).Email;
+           return email;
+        }
     }
 }

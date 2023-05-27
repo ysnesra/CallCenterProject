@@ -10,6 +10,7 @@ namespace Business.Abstract
     public interface ICallService
     {  
         void AddCallDto(CallDto model, string emailForClaim);
+        string CallwithCustomer(int customerId);
 
     }
 }

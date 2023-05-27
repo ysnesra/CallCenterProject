@@ -109,7 +109,17 @@ Müþteri bilgileri, talep türleri ve çözümlerle ilgili veri kaydý yapar
 Müþteriler Sayfasýnda; Müþteri Profil Sayfasý yapýldý.2 farklý yol denendi.
     1."Bilgilerim" sekmesine týklayýnca -> Müþteri kendi bilgilerini model üzerinden günceller.
     2."Profilim" sekmesine týklayýnca -> Müþteri kendi bilgilerinden hangisini deðiþtirmek istiyorsa sadece onu deðiþtirir. Burada Model kullanmadan her biri için action oluþturularak yapýldý.Böylece tek bir deðiþiklik yapýldýðýnda tüm deðerler güncellenmemiþ olur. 
-      Toastr.js kütüphanesi kullanýldý.Deðiþik yapýldýðýný müþteriye mesaj penceresi olarak bildirmemizi saðlar.
+      Toastr.js kütüphanesi kullanýldý.Deðiþiklik yapýldýðýný müþteriye mesaj penceresi olarak bildirmemizi saðlar.
+      Deðiþiklik olduðunda yada olmadýðýnda ekrana mesaj verme CustomerInformationProfile.cshtml ve CustomerController tarafýnda if ve try-catch bloklarý ile düzenlendi.
 
-  
+Login olurken de Mail ve Parola eþleþmezse ekrana hata mesajý veren toastr penceresi açýlcak þekilde düzenlendi.
 
+                                        #### Refactoring 8 ####
+Müþteri Temsilcisi talebi çözüp Call tablosuna kaydettiðinde -> Müþteriye otomatik olarak bilgilendirme Mailinin gitmesi 
+ 
+1. Core -> Helpers -> EmailToInformation isminde extentions metotu oluþturuldu.
+   Müþteriye gönderilecek olan bilgilendirme e-postasýnýn bir þablonunu buraya yazýldý.
+2. Hotmail hesabý üzerinden mail gönderimi yapýldý.SMTP serverýnýn ismine hotmail ayarlar kýsmýndan bakýlýp yazýldý.
+   username kýsmýnda hotmail adresimi, password kýsmýna da mailin þifresi yazýldý.
+   alýcýmail(recipientEmail) adreside callControllerdan geliyor.Müþteriye maili send ediyor
+ 

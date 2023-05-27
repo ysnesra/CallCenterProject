@@ -46,4 +46,20 @@
 
 
 
+@section Scripts{
+
+    @if (ViewData["loginResult"] != null && ViewData["loginResult"] == "loginSuccess")
+    {
+        <script>
+            toastr["success"]("@ViewData["loginMessage"]", "İşlem Başarılı");
+        </script>
+    }
+    else if (ViewData["loginResult"] != null && ViewData["loginResult"] == "loginError")
+    {
+        <script>
+            toastr["error"]("@ViewData["loginMessage"]", "UYARI");
+        </script>
+    }
+
+}
 

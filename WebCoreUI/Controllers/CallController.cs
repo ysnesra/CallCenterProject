@@ -4,7 +4,9 @@ using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient.Server;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using Core.Utilities.Helpers;
 
 namespace WebCoreUI.Controllers
 {
@@ -40,12 +42,13 @@ namespace WebCoreUI.Controllers
             {           
                 string emailForClaim = User.FindFirstValue("Email");
 
-                _callService.AddCallDto(model, emailForClaim);        
-                
+                _callService.AddCallDto(model, emailForClaim);
 
-                //mÜŞTERİ mail göndrme //Helper RabbitMQ
+                string email = _callService.CallwithCustomer(model.CustomerId);
 
-
+                //Müşteriye otomatik olarak görüşme bilgilendirme Maili gönderme
+                EmailToInformation emailHelper = new EmailToInformation();
+                emailHelper.SendEmail(email);
 
                 return Redirect("/CustomerRep/ProfileCustRep");
 

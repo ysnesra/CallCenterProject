@@ -14,5 +14,8 @@ namespace DataAccess.Abstract
         //Müşteri Temsilcisi Görüşme Form Ekranından Ekleme
         void AddRequestCall(CallDto callModel, string emailForClaim);
         void UpdateRequestCall(int requestId);
+
+        //Call-Customer Join
+        string CallwithCustomer(int customerId);
     }
 }

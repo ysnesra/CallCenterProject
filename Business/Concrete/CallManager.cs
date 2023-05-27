@@ -28,5 +28,12 @@ namespace Business.Concrete
             _callDal.UpdateRequestCall(model.RequestId);
             _callDal.SaveChanges(); 
         }
+
+        public string CallwithCustomer(int customerId)
+        {
+            string email=_callDal.CallwithCustomer(customerId);
+           
+            return email;
+        }
     }
 }

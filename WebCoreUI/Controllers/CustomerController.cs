@@ -109,28 +109,46 @@ namespace WebCoreUI.Controllers
 
             if (ModelState.IsValid)
             {
-                //Mail ve şifre eşleşiyor mu
-                var existCustomer = _customerService.GetByLoginFilter(model);
-                if (existCustomer == null)
+                try
                 {
-                    return RedirectToAction(nameof(Login));
+                    //Mail ve şifre eşleşiyor mu
+                    var existCustomer = _customerService.GetByLoginFilter(model);
+                    if (existCustomer == null)
+                    {
+                        return RedirectToAction(nameof(Login));
+                    }
+
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, existCustomer.CustomerId.ToString()));
+                    claims.Add(new Claim("Email", existCustomer.Email));
+                    claims.Add(new Claim("Password", existCustomer.Password));
+                    claims.Add(new Claim(ClaimTypes.Role, existCustomer.Role));
+
+                    ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    ViewData["loginResult"] = "loginSuccess";
+                    ViewData["loginMessage"] = "Giriş işlemi başarılı";
                 }
+                catch
+                {
+                    ViewData["loginResult"] = "loginError";
+                    ViewData["loginMessage"] = "Giriş yapılamadı //Mail Parola eşleşmedi";
 
-                List<Claim> claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, existCustomer.CustomerId.ToString()));
-                claims.Add(new Claim("Email", existCustomer.Email));
-                claims.Add(new Claim("Password", existCustomer.Password));
-                claims.Add(new Claim(ClaimTypes.Role, existCustomer.Role));
-
-                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+                }
+               
                 return RedirectToAction("Index", "Home");
             }
-            return View(model);
+            else
+            {
+                ViewData["loginResult"] = "loginError";
+                ViewData["loginMessage"] = "Mail yada Parola boş geçilemez";
+                return View(model);
+            }
+            
         }
 
         public IActionResult Logout()
