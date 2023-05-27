@@ -96,4 +96,17 @@ Müşteriler Sayfasında; Müşteri Profil Sayfası yapıldı.2 farklı yol dene
  - "Profilim" sekmesine tıklayınca -> Müşteri kendi bilgilerinden hangisini değiştirmek istiyorsa sadece onu değiştirir. Burada Model kullanmadan her biri için action oluşturularak yapıldı.Böylece tek bir değişiklik yapıldığında tüm değerler güncellenmemiş olur. 
       
       Toastr.js kütüphanesi kullanıldı.Değişik yapıldığını müşteriye mesaj penceresi olarak bildirmemizi sağlar. 
+      
+           **Refactoring 8** 
+Müşteri Temsilcisi talebi çözüp Call tablosuna kaydettiğinde -> Müşteriye otomatik olarak bilgilendirme Mailinin gitmesi 
+ 
+ -  1. Core -> Helpers -> EmailToInformation isminde extentions metotu oluşturuldu.
+   Müşteriye gönderilecek olan bilgilendirme e-postasının bir şablonunu buraya yazıldı.
+ -  2. Hotmail hesabı üzerinden mail gönderimi yapıldı.SMTP serverının ismi hotmail ayarlar kısmından bakılıp yazıldı.
+   username kısmına hotmail adresi, password kısmına da mailin şifresi yazıldı.
+   alıcımail(recipientEmail) adreside callControllerdan geliyor.Müşteriye maili send ediyor.
+ 
+ Otomatik Gönderilen Mail
+   ![mailgönderme](https://github.com/ysnesra/CallCenterProject/assets/104023688/7a4b418f-4834-40b3-b00e-9dd8d5658557)
+
 
